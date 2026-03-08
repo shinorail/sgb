@@ -82,7 +82,7 @@ document.addEventListener('submit', async (e) => {
     const status = document.getElementById('form-status');
     const lang = localStorage.getItem('sgb_lang') || 'ja';
 
-    const WEBHOOK_URL = "https://discord.com/api/webhooks/1480126236004057231/DDOCp_ltWv6X17umFGNjX18TbT8h8DAQWNhweE2-W0CUOWs6PsYrfKOc6xZOvublipiV";
+    const WEBHOOK_URL = "https://discord.com/api/webhooks/1480147720827048007/lbAY43bvzauce5pi-6dvG-5F9yujjy-PbKAgCtzEeqA7KqQ9e_4KijbSajLA-xQRwfH1";
 
     const payload = {
         embeds: [{
