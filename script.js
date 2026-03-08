@@ -1,50 +1,41 @@
-const translations = {
+const i18n = {
     'ja': {
-        'nav-home': 'ホーム',
-        'nav-link': '連携設定',
-        'hero-title': 'SGB システム公式サイト',
-        'hero-desc': 'Discordプロフィールにステータスを表示。あなたの冒険が、プロフィールを彩る。',
-        'btn-invite': 'Botを招待する',
-        'btn-guide': 'マニュアル',
-        'feature-title': 'システムの特長',
-        'feature-rpg': '⚔️ 本格RPG',
-        'feature-sync': '🔗 リアルタイム連動',
-        'feature-web': '🌐 Webダッシュボード',
-        'footer-copy': '© 2026 SGB Project - 信濃から世界へ'
+        // ナビ
+        'nav-home': 'ホーム', 'nav-link': 'レンケイ', 'nav-terms': 'キヤク', 'nav-privacy': 'プライバシー',
+        // トップページ
+        'hero-title': 'SGB システム 公式',
+        'hero-desc': 'ディスコードの プロフィールに ステータスを ひょうじさせる。あなたの ぼうけんが、いま はじまる。',
+        // 404
+        'error-title': '404 エラー', 'error-desc': 'その ページは みつかりませんでした。コマンドを まちがえたようです。',
+        // フッター
+        'footer': '© 2026 SGB プロジェクト - しなのから せかいへ'
     },
     'en': {
-        'nav-home': 'Home',
-        'nav-link': 'Linked Role',
-        'hero-title': 'SGB Official System',
-        'hero-desc': 'Sync your stats to your Discord profile. Your adventure, displayed to the world.',
-        'btn-invite': 'Invite Bot',
-        'btn-guide': 'Guide',
-        'feature-title': 'Key Features',
-        'feature-rpg': '⚔️ Authentic RPG',
-        'feature-sync': '🔗 Live Syncing',
-        'feature-web': '🌐 Web Dashboard',
-        'footer-copy': '© 2026 SGB Project - From Shinano'
+        // Nav
+        'nav-home': 'Home', 'nav-link': 'Link', 'nav-terms': 'Terms', 'nav-privacy': 'Privacy',
+        // Index
+        'hero-title': 'SGB System Official',
+        'hero-desc': 'Sync your stats to your Discord profile. Your adventure begins now.',
+        // 404
+        'error-title': '404 Error', 'error-desc': 'Page not found. Seems like a wrong command.',
+        // Footer
+        'footer': '© 2026 SGB Project - From Shinano'
     }
 };
 
 function switchLang(lang) {
     localStorage.setItem('sgb_lang', lang);
-    applyTranslations(lang);
+    applyTranslations();
 }
 
-function applyTranslations(lang) {
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[lang][key]) {
-            el.textContent = translations[lang][key];
-        }
+function applyTranslations() {
+    const lang = localStorage.getItem('sgb_lang') || 'ja';
+    document.querySelectorAll('[data-t]').forEach(el => {
+        const key = el.getAttribute('data-t');
+        if (i18n[lang][key]) el.textContent = i18n[lang][key];
     });
-    // ボタンのアクティブ状態を視覚的に変える場合などに使用
-    document.documentElement.lang = lang;
+    // ボタンの見た目を調整（オプション）
 }
 
 // ページ読み込み時に実行
-document.addEventListener('DOMContentLoaded', () => {
-    const savedLang = localStorage.getItem('sgb_lang') || 'ja';
-    applyTranslations(savedLang);
-});
+document.addEventListener('DOMContentLoaded', applyTranslations);
