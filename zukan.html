@@ -66,31 +66,4 @@
         </nav>
 
         <h1>👾 SGB モンスター図鑑</h1>
-        ```
-
-
-
----
-
-### ## 🤖 2. ゲーム側：図鑑へ案内するボタンを追加
-
-Botの `/official` コマンドや、バトルのあとに「図鑑でチェックしよう！」とボタンを出すと、ユーザーがサイトを見てくれるようになります。
-
-**`main.py` のコマンド部分を以下のように書き換えてみてください：**
-
-```python
-@bot.tree.command(name="official", description="公式サイトや図鑑を表示します")
-async def official(interaction: discord.Interaction):
-    # ボタン付きのメッセージを送る
-    view = discord.ui.View()
-    # 公式サイトボタン
-    btn_site = discord.ui.Button(label="公式サイト", url=OFFICIAL_SITE)
-    # 図鑑ページボタン (URLをあなたのzukan.htmlに合わせてください)
-    btn_zukan = discord.ui.Button(label="👾 モンスター図鑑", url=f"{OFFICIAL_SITE}zukan.html")
     
-    view.add_item(btn_site)
-    view.add_item(btn_zukan)
-    
-    await interaction.response.send_message("🌐 SGBの最新情報はこちらからチェック！", view=view)
-</body>
-</html>
