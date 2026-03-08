@@ -1,6 +1,35 @@
-<main class="container">
-    <div class="content-box">
-        <h1 data-t="terms-h1"></h1>
-        <div style="white-space: pre-wrap; text-align: left; font-size: 0.9rem;" data-t="terms-full"></div>
-    </div>
-</main>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGB | Privacy Policy</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">SGB.<span>system</span></div>
+        <div class="nav-links">
+            <a href="index.html" data-t="nav-home"></a>
+            <a href="terms.html" data-t="nav-terms"></a>
+            <a href="privacy.html" data-t="nav-privacy"></a>
+            <span class="lang-switcher">
+                <button onclick="switchLang('ja')" class="btn-lang">JP</button>
+                <button onclick="switchLang('en')" class="btn-lang">EN</button>
+            </span>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="content-box">
+            <h1 data-t="priv-h1"></h1>
+            <div class="long-text" data-t="priv-body"></div>
+        </div>
+    </main>
+
+    <footer>
+        <p data-t="footer"></p>
+    </footer>
+</body>
+</html>
