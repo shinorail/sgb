@@ -1,22 +1,28 @@
 const i18n = {
     'ja': {
-        'nav-home': 'ホーム', 'nav-link': '連携設定', 'nav-terms': '規約', 'nav-privacy': '個人情報',
-        'idx-h1': 'SGB システム 公式サイト',
-        'idx-p': 'Discordプロフィールにゲームのステータスを表示する連携システムです。',
-        'terms-h1': '利用規約',
-        'terms-p': 'Botの利用にあたり、不正行為や迷惑行為を禁止します。',
-        'privacy-h1': 'プライバシーポリシー',
-        'privacy-p': '取得したID等のデータは、ゲームの連携表示以外には使用しません。',
+        // ナビ
+        'nav-home': 'ホーム', 'nav-link': 'レンケイ', 'nav-terms': 'キヤク', 'nav-privacy': 'プライバシー',
+        // 紹介ページ (SGBの真の姿)
+        'idx-h1': 'あなたのサーバーが冒険の舞台に！',
+        'idx-p': 'SGBは、チャットで手軽に遊べる本格放置型RPG Botです。',
+        'idx-f1-t': '⚔️ /adventure', 'idx-f1-d': '多彩なモンスターとバトル！レアな「はぐれメタル」を倒して一気にレベルアップ。',
+        'idx-f2-t': '💰 /shop', 'idx-f2-d': '手に入れたゴールドで装備を整えよう。セレクトメニューで買い物もスムーズ！',
+        'idx-f3-t': '🏆 /ranking', 'idx-f3-d': 'サーバー内のライバルとレベルを競い合え！最強の冒険者を目指そう。',
+        'idx-f4-t': '📊 /status', 'idx-f4-d': '自分の成長をいつでも確認。Discordプロフィールにデータが連動します。',
+        'dev-info': '開発者: r.m031y',
         'footer': '© 2026 SGB Project'
     },
     'en': {
+        // Nav
         'nav-home': 'Home', 'nav-link': 'Link', 'nav-terms': 'Terms', 'nav-privacy': 'Privacy',
-        'idx-h1': 'SGB System Official',
-        'idx-p': 'System for syncing game stats to your Discord profile.',
-        'terms-h1': 'Terms of Service',
-        'terms-p': 'Cheating and nuisance behavior are prohibited.',
-        'privacy-h1': 'Privacy Policy',
-        'privacy-p': 'User data is used only for game-role synchronization.',
+        // Content
+        'idx-h1': 'Your Server Becomes an Adventure!',
+        'idx-p': 'SGB is a full-fledged idle RPG Bot playable via chat.',
+        'idx-f1-t': '⚔️ /adventure', 'idx-f1-d': 'Battle various monsters! Defeat the rare "Liquid Metal Slime" to level up fast.',
+        'idx-f2-t': '💰 /shop', 'idx-f2-d': 'Equip yourself with gold. Shopping is smooth with select menus!',
+        'idx-f3-t': '🏆 /ranking', 'idx-f3-d': 'Compete with rivals in your server and reach the top!',
+        'idx-f4-t': '📊 /status', 'idx-f4-d': 'Check your growth anytime. Data syncs with your Discord profile.',
+        'dev-info': 'Developer: r.m031y',
         'footer': '© 2026 SGB Project'
     }
 };
@@ -32,7 +38,5 @@ function applyTranslations() {
         const key = el.getAttribute('data-t');
         if (i18n[lang][key]) el.textContent = i18n[lang][key];
     });
-    document.documentElement.lang = lang;
 }
-
 document.addEventListener('DOMContentLoaded', applyTranslations);
