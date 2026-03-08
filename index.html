@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGB Official</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
@@ -18,16 +20,24 @@
     </nav>
 
     <main class="container">
-        <div class="content-box">
+        <section class="content-box" style="text-align:center;">
             <h1 data-t="idx-h1"></h1>
             <p data-t="idx-p"></p>
-        </div>
+            <p data-t="dev" style="color:var(--accent);"></p>
+        </section>
 
-        <div class="content-box" style="margin-top:20px;">
-            <h2 data-t="sim-title"></h2>
-            <button class="btn-run" onclick="runSim()" data-t="sim-btn"></button>
-            <div id="sim-output" class="discord-sim" style="display:none;"></div>
-        </div>
+        <section class="content-box">
+            <h2 data-t="sim-title" style="text-align:center;"></h2>
+            <div class="sim-nav">
+                <button class="btn-cmd" onclick="runSim('adv')">/adventure</button>
+                <button class="btn-cmd" onclick="runSim('shop')">/shop</button>
+                <button class="btn-cmd" onclick="runSim('rank')">/ranking</button>
+                <button class="btn-cmd" onclick="runSim('status')">/status</button>
+            </div>
+            <div id="sim-screen" class="discord-ui">
+                <p style="color:var(--text-sub); text-align:center;">ボタンを押してコマンドを試そう！</p>
+            </div>
+        </section>
     </main>
 
     <footer><p data-t="footer"></p></footer>
