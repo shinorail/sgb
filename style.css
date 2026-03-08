@@ -1,53 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
-
-:root {
-    --bg-color: #0d1117;       /* ダークモード背景 */
-    --card-bg: #161b22;        /* コンテンツ用グレー */
-    --accent: #5865F2;         /* Discordカラー */
-    --text-primary: #ffffff;
-    --text-secondary: #8b949e;
-    --border: #30363d;
-    --font-dq: 'DotGothic16', sans-serif;
+/* 前回までのスタイルに以下を追加 */
+.discord-sim {
+    background: #2b2d31;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: left;
+    font-family: sans-serif; /* Discordは普通のフォント */
 }
 
-body {
-    margin: 0;
-    font-family: var(--font-dq); /* フォントだけレトロ */
-    background-color: var(--bg-color);
-    color: var(--text-primary);
-    line-height: 1.6;
+.bot-tag {
+    background: #5865f2;
+    color: white;
+    font-size: 0.6rem;
+    padding: 2px 4px;
+    border-radius: 3px;
+    vertical-align: middle;
 }
 
-/* ナビゲーション */
-.navbar {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1rem 5%; background: rgba(13, 17, 23, 0.9);
-    border-bottom: 1px solid var(--border);
-    position: sticky; top: 0; z-index: 1000;
-    backdrop-filter: blur(10px);
+.embed {
+    background: #1e1f22;
+    border-left: 4px solid #5865f2;
+    padding: 15px;
+    border-radius: 4px;
+    margin-top: 10px;
 }
 
-.logo { font-size: 1.5rem; color: var(--accent); font-weight: bold; }
+.time { color: #949ba4; font-size: 0.75rem; }
 
-.nav-links a {
-    color: var(--text-secondary); text-decoration: none;
-    margin-left: 20px; font-size: 0.9rem; transition: color 0.2s;
+.btn-run {
+    background: #248046;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: 'DotGothic16', sans-serif;
 }
-.nav-links a:hover { color: var(--text-primary); }
-
-/* コンテンツ */
-.container { max-width: 800px; margin: 40px auto; padding: 20px; }
-.content-box {
-    background: var(--card-bg); border: 1px solid var(--border);
-    padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-
-/* 言語切り替え */
-.lang-switcher button {
-    background: transparent; border: 1px solid var(--border);
-    color: var(--text-secondary); padding: 4px 10px; border-radius: 6px;
-    cursor: pointer; font-family: var(--font-dq); margin-left: 5px;
-}
-.lang-switcher button:hover { border-color: var(--accent); color: var(--accent); }
-
-footer { text-align: center; padding: 40px; color: var(--text-secondary); font-size: 0.8rem; }
