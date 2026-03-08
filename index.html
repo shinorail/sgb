@@ -2,49 +2,31 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGB System | Official</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
 <body>
     <nav class="navbar">
-        <div class="logo">SGB.<span>system</span></div>
+        <div class="logo">SGB.</div>
         <div class="nav-links">
             <a href="index.html" data-t="nav-home"></a>
-            <a href="linked-role.html" data-t="nav-link"></a>
             <a href="terms.html" data-t="nav-terms"></a>
-            <span class="lang-switcher">
-                <button onclick="switchLang('ja')">JP</button>
-                <button onclick="switchLang('en')">EN</button>
-            </span>
+            <a href="privacy.html" data-t="nav-privacy"></a>
+            <button onclick="switchLang('ja')" class="btn-lang">JP</button>
+            <button onclick="switchLang('en')" class="btn-lang">EN</button>
         </div>
     </nav>
 
     <main class="container">
-        <div class="content-box" style="text-align: center; margin-bottom: 30px;">
+        <div class="content-box">
             <h1 data-t="idx-h1"></h1>
-            <p data-t="idx-p" style="color: #8b949e;"></p>
-            <p data-t="dev-info" style="font-size: 0.9rem; margin-top: 10px; color: #5865F2;"></p>
+            <p data-t="idx-p"></p>
         </div>
 
-        <div class="feature-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-            <div class="content-box">
-                <h3 data-t="idx-f1-t"></h3>
-                <p data-t="idx-f1-d" style="font-size: 0.85rem;"></p>
-            </div>
-            <div class="content-box">
-                <h3 data-t="idx-f2-t"></h3>
-                <p data-t="idx-f2-d" style="font-size: 0.85rem;"></p>
-            </div>
-            <div class="content-box">
-                <h3 data-t="idx-f3-t"></h3>
-                <p data-t="idx-f3-d" style="font-size: 0.85rem;"></p>
-            </div>
-            <div class="content-box">
-                <h3 data-t="idx-f4-t"></h3>
-                <p data-t="idx-f4-d" style="font-size: 0.85rem;"></p>
-            </div>
+        <div class="content-box" style="margin-top:20px;">
+            <h2 data-t="sim-title"></h2>
+            <button class="btn-run" onclick="runSim()" data-t="sim-btn"></button>
+            <div id="sim-output" class="discord-sim" style="display:none;"></div>
         </div>
     </main>
 
