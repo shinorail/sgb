@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGB モンスター図鑑</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #121212; color: #e0e0e0; text-align: center; }
+        .container { max-width: 800px; margin: auto; padding: 20px; }
+        .monster-card { background: #1e1e1e; border: 2px solid #333; border-radius: 12px; padding: 15px; margin: 15px 0; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
+        .monster-card:hover { border-color: #ff9800; transform: scale(1.02); }
+        .monster-info { text-align: left; }
+        .hp-bar { color: #ff5252; font-weight: bold; }
+        .atk-bar { color: #ffa726; font-weight: bold; }
+        .rare-tag { background: #ffd700; color: black; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>👾 SGB モンスター図鑑</h1>
+        <p>ゲーム内の最新データがここに同期されます。</p>
+        <div id="monster-list">
+            </div>
+    </div>
+
+    <script>
+        // JSONファイルを読み込んで画面に表示する
+        fetch('monsters.json')
+            .then(response => response.json())
+            .then(data => {
+                const list = document.getElementById('monster-list');
+                data.forEach(m => {
+                    const card = document.createElement('div');
+                    card.className = 'monster-card';
+                    card.innerHTML = `
+                        <div class="monster-info">
+                            <h2>${m.rare} ${m.name}</h2>
+                            <p>${m.desc}</p>
+                        </div>
+                        <div class="monster-stats">
+                            <div class="hp-bar">HP: ${m.hp}</div>
+                            <div class="atk-bar">ATK: ${m.atk}</div>
+                        </div>
+                    `;
+                    list.appendChild(card);
+                });
+            })
+            .catch(error => {
+                document.getElementById('monster-list').innerHTML = "データの読み込みに失敗しました。monsters.jsonをアップロードしてください。";
+            });
+    </script>
+</body>
+</html>
