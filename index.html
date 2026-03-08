@@ -3,59 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGB System | Official</title>
+    <title>SGB Official</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
-<body class="dark-theme">
+<body>
 
-    <header class="glass-nav">
-        <nav class="container">
-            <div class="logo">SGB<span>.system</span></div>
-            <div class="nav-links">
-                <a href="index.html" data-i18n="nav-home">ホーム</a>
-                <a href="linked-role.html" data-i18n="nav-link">連携設定</a>
-            </div>
-            <div class="lang-switcher">
-                <button onclick="switchLang('ja')" class="btn-lang">JP</button>
-                <button onclick="switchLang('en')" class="btn-lang">EN</button>
-            </div>
-        </nav>
-    </header>
+    <nav class="navbar">
+        <div class="logo">SGB System</div>
+        <div class="nav-links">
+            <a href="index.html" data-t="nav-home">ホーム</a>
+            <a href="linked-role.html" data-t="nav-link">連携設定</a>
+            <a href="terms.html" data-t="nav-terms">利用規約</a>
+            <button onclick="switchLang('ja')" class="btn-lang">JP</button>
+            <button onclick="switchLang('en')" class="btn-lang">EN</button>
+        </div>
+    </nav>
 
-    <main>
-        <section class="hero-section">
-            <div class="hero-bg-glow"></div>
-            <div class="container hero-content">
-                <h1 class="glitch-text" data-i18n="hero-title">SGB システム公式サイト</h1>
-                <p class="hero-sub" data-i18n="hero-desc">Discordプロフィールにステータスを表示。あなたの冒険が、プロフィールを彩る。</p>
-                <div class="hero-btns">
-                    <a href="#" class="btn-neon" data-i18n="btn-invite">Botを招待する</a>
-                    <a href="#" class="btn-outline" data-i18n="btn-guide">マニュアル</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="features container">
-            <div class="feature-grid">
-                <div class="glass-card">
-                    <div class="icon">⚔️</div>
-                    <h3 data-i18n="feature-rpg">本格RPG</h3>
-                </div>
-                <div class="glass-card">
-                    <div class="icon">🔗</div>
-                    <h3 data-i18n="feature-sync">リアルタイム連動</h3>
-                </div>
-                <div class="glass-card">
-                    <div class="icon">🌐</div>
-                    <h3 data-i18n="feature-web">Webダッシュボード</h3>
-                </div>
-            </div>
-        </section>
+    <main class="container">
+        <div class="content-box">
+            <h1 data-t="index-h1"></h1> 
+            <p data-t="index-p"></p>
+        </div>
     </main>
 
-    <footer class="simple-footer">
-        <p data-i18n="footer-copy">© 2026 SGB Project</p>
+    <footer>
+        <p data-t="footer"></p>
     </footer>
 
 </body>
