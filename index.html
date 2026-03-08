@@ -7,43 +7,54 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
-<body>
+<body class="dark-theme">
 
-    <header>
+    <header class="glass-nav">
         <nav class="container">
-            <div class="logo">SGB <span>System</span></div>
+            <div class="logo">SGB<span>.system</span></div>
             <div class="nav-links">
                 <a href="index.html" data-i18n="nav-home">ホーム</a>
                 <a href="linked-role.html" data-i18n="nav-link">連携設定</a>
             </div>
             <div class="lang-switcher">
-                <button onclick="switchLang('ja')" id="btn-ja">JP</button>
-                <button onclick="switchLang('en')" id="btn-en">EN</button>
+                <button onclick="switchLang('ja')" class="btn-lang">JP</button>
+                <button onclick="switchLang('en')" class="btn-lang">EN</button>
             </div>
         </nav>
     </header>
 
-    <section class="hero">
-        <div class="container">
-            <h1 data-i18n="hero-title">SGB システム公式サイト</h1>
-            <p data-i18n="hero-desc">Discordプロフィールにステータスを表示。あなたの冒険が、プロフィールを彩る。</p>
-            <div class="hero-btns">
-                <a href="#" class="btn-main" data-i18n="btn-invite">Botを招待する</a>
-                <a href="#" class="btn-sub" data-i18n="btn-guide">マニュアル</a>
+    <main>
+        <section class="hero-section">
+            <div class="hero-bg-glow"></div>
+            <div class="container hero-content">
+                <h1 class="glitch-text" data-i18n="hero-title">SGB システム公式サイト</h1>
+                <p class="hero-sub" data-i18n="hero-desc">Discordプロフィールにステータスを表示。あなたの冒険が、プロフィールを彩る。</p>
+                <div class="hero-btns">
+                    <a href="#" class="btn-neon" data-i18n="btn-invite">Botを招待する</a>
+                    <a href="#" class="btn-outline" data-i18n="btn-guide">マニュアル</a>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="features container">
-        <h2 data-i18n="feature-title">システムの特長</h2>
-        <div class="feature-grid">
-            <div class="card" data-i18n="feature-rpg">⚔️ 本格RPG</div>
-            <div class="card" data-i18n="feature-sync">🔗 リアルタイム連動</div>
-            <div class="card" data-i18n="feature-web">🌐 Webダッシュボード</div>
-        </div>
-    </section>
+        <section class="features container">
+            <div class="feature-grid">
+                <div class="glass-card">
+                    <div class="icon">⚔️</div>
+                    <h3 data-i18n="feature-rpg">本格RPG</h3>
+                </div>
+                <div class="glass-card">
+                    <div class="icon">🔗</div>
+                    <h3 data-i18n="feature-sync">リアルタイム連動</h3>
+                </div>
+                <div class="glass-card">
+                    <div class="icon">🌐</div>
+                    <h3 data-i18n="feature-web">Webダッシュボード</h3>
+                </div>
+            </div>
+        </section>
+    </main>
 
-    <footer>
+    <footer class="simple-footer">
         <p data-i18n="footer-copy">© 2026 SGB Project</p>
     </footer>
 
