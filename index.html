@@ -1,35 +1,33 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SGB Official</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
 <body>
-
     <nav class="navbar">
-        <div class="logo">SGB System</div>
+        <div class="logo">SGB.</div>
         <div class="nav-links">
-            <a href="index.html" data-t="nav-home">ホーム</a>
-            <a href="linked-role.html" data-t="nav-link">連携設定</a>
-            <a href="terms.html" data-t="nav-terms">利用規約</a>
-            <button onclick="switchLang('ja')" class="btn-lang">JP</button>
-            <button onclick="switchLang('en')" class="btn-lang">EN</button>
+            <a href="index.html" data-t="nav-home"></a>
+            <a href="linked-role.html" data-t="nav-link"></a>
+            <a href="terms.html" data-t="nav-terms"></a>
+            <a href="privacy.html" data-t="nav-privacy"></a>
+            <span class="lang-switcher">
+                <button onclick="switchLang('ja')">JP</button>
+                <button onclick="switchLang('en')">EN</button>
+            </span>
         </div>
     </nav>
 
     <main class="container">
         <div class="content-box">
-            <h1 data-t="index-h1"></h1> 
-            <p data-t="index-p"></p>
+            <h1 data-t="idx-h1"></h1>
+            <p data-t="idx-p"></p>
         </div>
     </main>
 
-    <footer>
-        <p data-t="footer"></p>
-    </footer>
-
+    <footer><p data-t="footer"></p></footer>
 </body>
 </html>
