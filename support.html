@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGB | Support</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">SGB.<span>system</span></div>
+        <div class="nav-links">
+            <a href="index.html" data-t="nav-home"></a>
+            <a href="support.html" data-t="nav-support"></a>
+            <a href="terms.html" data-t="nav-terms"></a>
+            <span class="lang-switcher">
+                <button onclick="switchLang('ja')" class="btn-lang">JP</button>
+                <button onclick="switchLang('en')" class="btn-lang">EN</button>
+            </span>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="content-box" style="text-align: center;">
+            <h1 data-t="sup-h1"></h1>
+            <p data-t="sup-p"></p>
+            <a href="https://discord.gg/あなたのサーバー招待リンク" class="btn-cmd" style="display:inline-block; text-decoration:none; margin-top:15px; background: #5865F2;" data-t="sup-btn"></a>
+        </div>
+
+        <div class="content-box">
+            <h2 data-t="faq-h1" style="color: var(--accent);"></h2>
+            <div style="text-align: left; border-top: 1px solid var(--border); padding-top: 15px;">
+                <p><strong data-t="faq-q1"></strong><br><span data-t="faq-a1" style="color: var(--text-sub);"></span></p>
+                <p style="margin-top: 15px;"><strong data-t="faq-q2"></strong><br><span data-t="faq-a2" style="color: var(--text-sub);"></span></p>
+            </div>
+        </div>
+    </main>
+
+    <footer><p data-t="footer"></p></footer>
+</body>
+</html>
