@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGB RPG - 世界ランキング</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 { color: #ffd700; text-shadow: 2px 2px #000; }
+        .ranking-container {
+            max-width: 600px;
+            margin: auto;
+            background: #2a2a2a;
+            padding: 20px;
+            border: 4px solid #ffd700;
+            border-radius: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #444;
+        }
+        th { background-color: #333; color: #ffd700; }
+        .rank-1 { color: #ff4500; font-weight: bold; font-size: 1.2em; }
+        .gold { color: #ffd700; }
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #ffd700;
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🏆 SGB 世界ランキング</h1>
+    <div class="ranking-container">
+        <p>最強の冒険者たちの記録</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>順位</th>
+                    <th>レベル</th>
+                    <th>所持金</th>
+                </tr>
+            </thead>
+            <tbody id="ranking-data">
+                </tbody>
+        </table>
+    </div>
+
+    <a href="index.html" class="back-btn">トップへ戻る</a>
+
+    <script>
+        // ranking.json を読み込んで表示する
+        async function loadRanking() {
+            try {
+                // キャッシュを避けるためにクエリパラメータを追加
+                const response = await fetch('ranking.json?t=' + new Date().getTime());
+                const data = await response.json();
+                const tableBody = document.getElementById('ranking-data');
+
+                if (data.length === 0) {
+                    tableBody.innerHTML = "<tr><td colspan='3'>データがありません</td></tr>";
+                    return;
+                }
+
+                data.forEach(user => {
+                    const row = document.createElement('tr');
+                    const rankClass = user.rank === 1 ? 'rank-1' : '';
+                    
+                    row.innerHTML = `
+                        <td class="${rankClass}">${user.rank}位</td>
+                        <td>Lv.${user.lv}</td>
+                        <td class="gold">${user.gold.toLocaleString()} G</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error("ランキングの読み込みに失敗しました:", error);
+                document.getElementById('ranking-data').innerHTML = "<tr><td colspan='3'>読み込みエラー</td></tr>";
+            }
+        }
+
+        loadRanking();
+    </script>
+</body>
+</html>
