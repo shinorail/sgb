@@ -3,46 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGB Official System</title>
+    <title>SGB System | Official</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
 <body>
 
     <header>
-        <nav>
-            <div class="logo">SGB System</div>
-            <div class="menu">
+        <nav class="container">
+            <div class="logo">SGB <span>System</span></div>
+            <div class="nav-links">
                 <a href="index.html" data-i18n="nav-home">ホーム</a>
-                <a href="linked-role.html" data-i18n="nav-link">Discord連携</a>
+                <a href="linked-role.html" data-i18n="nav-link">連携設定</a>
             </div>
-            <div class="lang-switch">
-                <button onclick="switchLang('ja')">JP</button>
-                <button onclick="switchLang('en')">EN</button>
+            <div class="lang-switcher">
+                <button onclick="switchLang('ja')" id="btn-ja">JP</button>
+                <button onclick="switchLang('en')" id="btn-en">EN</button>
             </div>
         </nav>
     </header>
 
-    <main class="hero">
-        <h1 data-i18n="main-title">SGB システム公式サイト</h1>
-        <p data-i18n="main-desc">Discordプロフィールにステータスを表示できる、次世代のRPG Bot。</p>
-        
-        <div class="cta-buttons">
-            <a href="#" class="btn primary" data-i18n="btn-invite">Botを招待する</a>
-            <a href="#" class="btn secondary" data-i18n="btn-docs">使い方ガイド</a>
+    <section class="hero">
+        <div class="container">
+            <h1 data-i18n="hero-title">SGB システム公式サイト</h1>
+            <p data-i18n="hero-desc">Discordプロフィールにステータスを表示。あなたの冒険が、プロフィールを彩る。</p>
+            <div class="hero-btns">
+                <a href="#" class="btn-main" data-i18n="btn-invite">Botを招待する</a>
+                <a href="#" class="btn-sub" data-i18n="btn-guide">マニュアル</a>
+            </div>
         </div>
+    </section>
 
-        <section class="features">
-            <h2 data-i18n="feature-title">主な機能</h2>
-            <ul>
-                <li data-i18n="feature-1">⚔️ 本格RPG体験</li>
-                <li data-i18n="feature-2">🔗 Discordプロフィール連動</li>
-            </ul>
-        </section>
-    </main>
+    <section class="features container">
+        <h2 data-i18n="feature-title">システムの特長</h2>
+        <div class="feature-grid">
+            <div class="card" data-i18n="feature-rpg">⚔️ 本格RPG</div>
+            <div class="card" data-i18n="feature-sync">🔗 リアルタイム連動</div>
+            <div class="card" data-i18n="feature-web">🌐 Webダッシュボード</div>
+        </div>
+    </section>
 
     <footer>
-        <p data-i18n="footer-text">© 2026 SGB Project</p>
+        <p data-i18n="footer-copy">© 2026 SGB Project</p>
     </footer>
 
 </body>
