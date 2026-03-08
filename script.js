@@ -1,25 +1,19 @@
 const i18n = {
     'ja': {
-        // ナビ
-        'nav-home': 'ホーム', 'nav-link': 'レンケイ', 'nav-terms': 'キヤク', 'nav-privacy': 'プライバシー',
-        // トップページ
-        'hero-title': 'SGB システム 公式',
-        'hero-desc': 'ディスコードの プロフィールに ステータスを ひょうじさせる。あなたの ぼうけんが、いま はじまる。',
-        // 404
-        'error-title': '404 エラー', 'error-desc': 'その ページは みつかりませんでした。コマンドを まちがえたようです。',
-        // フッター
-        'footer': '© 2026 SGB プロジェクト - しなのから せかいへ'
+        'nav-home': 'ホーム', 'nav-link': '連携設定', 'nav-terms': '利用規約', 'nav-privacy': 'プライバシー',
+        'index-h1': 'SGB システム 公式サイト',
+        'index-p': 'Discordプロフィールにゲームステータスを同期する、公式の連携システムです。',
+        'terms-h1': '利用規約',
+        'terms-p': '本システムを利用するにあたり、以下の規約に同意したものとみなします。',
+        'footer': '© 2026 SGB Project'
     },
     'en': {
-        // Nav
-        'nav-home': 'Home', 'nav-link': 'Link', 'nav-terms': 'Terms', 'nav-privacy': 'Privacy',
-        // Index
-        'hero-title': 'SGB System Official',
-        'hero-desc': 'Sync your stats to your Discord profile. Your adventure begins now.',
-        // 404
-        'error-title': '404 Error', 'error-desc': 'Page not found. Seems like a wrong command.',
-        // Footer
-        'footer': '© 2026 SGB Project - From Shinano'
+        'nav-home': 'Home', 'nav-link': 'Linked Role', 'nav-terms': 'Terms', 'nav-privacy': 'Privacy',
+        'index-h1': 'SGB System Official',
+        'index-p': 'An official system for syncing game stats to your Discord profile.',
+        'terms-h1': 'Terms of Service',
+        'terms-p': 'By using this system, you agree to the following terms and conditions.',
+        'footer': '© 2026 SGB Project'
     }
 };
 
@@ -34,8 +28,6 @@ function applyTranslations() {
         const key = el.getAttribute('data-t');
         if (i18n[lang][key]) el.textContent = i18n[lang][key];
     });
-    // ボタンの見た目を調整（オプション）
 }
 
-// ページ読み込み時に実行
 document.addEventListener('DOMContentLoaded', applyTranslations);
