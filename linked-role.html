@@ -9,15 +9,34 @@
         .auth-card { background: #1a1d1f; padding: 40px; border-radius: 20px; border: 1px solid #5865F2; max-width: 400px; margin: 0 auto; }
         .btn-auth { background: #5865F2; color: white; padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 20px; transition: 0.3s; }
         .btn-auth:hover { background: #4752c4; transform: scale(1.05); }
+        .success-msg { color: #43b581; font-weight: bold; display: none; }
     </style>
 </head>
 <body>
-    <div class="auth-card">
-        <h2>Connect to SGB</h2>
-        <p>Authorize SGB to display your in-game stats on your Discord profile.</p>
-        <a href="https://discord.com/oauth2/authorize?client_id=1480049103160348672&response_type=code&redirect_uri=https%3A%2F%2Fshinorail.github.io%2Fsgb%2Flinked-role.html&scope=role_connections.write" class="btn-auth">
-    Connect via Discord
-</a>
+    <div class="auth-card" id="card">
+        <div id="auth-ui">
+            <h2>Connect to SGB</h2>
+            <p>Authorize SGB to display your in-game stats on your Discord profile.</p>
+            <a href="https://discord.com/oauth2/authorize?client_id=1480049103160348672&response_type=code&redirect_uri=https%3A%2F%2Fshinorail.github.io%2Fsgb%2Flinked-role.html&scope=role_connections.write" class="btn-auth">
+                Connect via Discord
+            </a>
+        </div>
+        
+        <div id="success-ui" style="display: none;">
+            <h2 style="color: #43b581;">Success!</h2>
+            <p>連携が完了しました！<br>Discordに戻ってプロフィールを確認してください。</p>
+            <a href="index.html" style="color: #b5bac1; text-decoration: none; font-size: 0.9rem;">▶ おしろにもどる</a>
+        </div>
     </div>
+
+    <script>
+        // URLに "code=" が含まれているかチェック
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('code')) {
+            // 認証ボタンを隠して、成功メッセージを出す
+            document.getElementById('auth-ui').style.display = 'none';
+            document.getElementById('success-ui').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
