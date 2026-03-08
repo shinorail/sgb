@@ -14,6 +14,7 @@
             <a href="index.html" data-t="nav-home"></a>
             <a href="support.html" data-t="nav-support"></a>
             <a href="terms.html" data-t="nav-terms"></a>
+            <a href="privacy.html" data-t="nav-privacy"></a>
             <span class="lang-switcher">
                 <button onclick="switchLang('ja')" class="btn-lang">JP</button>
                 <button onclick="switchLang('en')" class="btn-lang">EN</button>
@@ -22,13 +23,28 @@
     </nav>
 
     <main class="container">
-        <div class="content-box" style="text-align: center;">
+        <div class="content-box" style="text-align: center; margin-bottom: 30px;">
             <h1 data-t="sup-h1"></h1>
             <p data-t="sup-p"></p>
-            <a href="https://discord.gg/あなたのサーバー招待リンク" class="btn-cmd" style="display:inline-block; text-decoration:none; margin-top:15px; background: #5865F2;" data-t="sup-btn"></a>
+            <a href="https://discord.gg/YOUR_INVITE_LINK" class="btn-cmd" style="display:inline-block; text-decoration:none; margin-top:15px; background: #5865F2;" data-t="sup-btn"></a>
         </div>
 
         <div class="content-box">
+            <h2 data-t="form-h1" style="color: var(--accent); text-align: center;"></h2>
+            <p style="font-size: 0.8rem; color: var(--text-sub); margin-bottom: 20px; text-align: center;">
+                Discordアカウントをお持ちでない場合や、直接連絡したい場合はこちらからどうぞ。
+            </p>
+            <form id="contact-form" style="display: flex; flex-direction: column; gap: 15px;">
+                <input type="text" id="form-name" placeholder="Name / 名前" required 
+                       style="padding: 12px; border-radius: 6px; border: 1px solid var(--border); background: #000; color: #fff; font-family: var(--font-dq);">
+                <textarea id="form-msg" placeholder="Message / お問い合わせ内容" rows="5" required 
+                          style="padding: 12px; border-radius: 6px; border: 1px solid var(--border); background: #000; color: #fff; font-family: var(--font-dq);"></textarea>
+                <button type="submit" class="btn-cmd" style="background: var(--accent); padding: 12px;" data-t="form-btn"></button>
+            </form>
+            <div id="form-status" style="margin-top: 15px; text-align: center; font-size: 0.9rem;"></div>
+        </div>
+
+        <div class="content-box" style="margin-top: 30px;">
             <h2 data-t="faq-h1" style="color: var(--accent);"></h2>
             <div style="text-align: left; border-top: 1px solid var(--border); padding-top: 15px;">
                 <p><strong data-t="faq-q1"></strong><br><span data-t="faq-a1" style="color: var(--text-sub);"></span></p>
