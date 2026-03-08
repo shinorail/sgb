@@ -1,58 +1,79 @@
-/* --- ドラクエ風ピクセルフォントを読み込む --- */
 @import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
 
 :root {
-    --bg-dark: #000000; /* 完全な黒 */
-    --window-border: #ffffff; /* 白い枠線 */
-    --text-color: #ffffff;
-    --accent-gold: #ffcc00; /* ドラクエの重要テキスト風 */
-    /* フォントをピクセルフォントに指定 */
-    --font-family: 'DotGothic16', sans-serif;
+    --bg-color: #121212;      /* 落ち着いた黒 */
+    --card-bg: #1e1e1e;       /* 少し明るいグレー */
+    --accent: #5865F2;        /* Discord Blue */
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --border: #333333;
+    --font-dq: 'DotGothic16', sans-serif;
 }
 
 body {
     margin: 0;
     font-family: var(--font-family);
-    background-color: var(--bg-dark);
-    color: var(--text-color);
-    image-rendering: pixelated; /* ドットをくっきり見せる */
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    line-height: 1.6;
 }
 
-/* --- 全ページ共通ナビゲーション --- */
+/* 真面目なナビゲーション */
 .navbar {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 10px 5%;
-    background: rgba(0,0,0,0.8);
-    position: sticky; top: 0; z-index: 1000;
-    border-bottom: 2px solid var(--window-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background: rgba(18, 18, 18, 0.95);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .nav-links a {
-    color: var(--text-color); text-decoration: none; margin-left: 15px;
-    font-size: 1rem; position: relative;
-}
-/* ホバーした時にドラクエの「▶」が出るようにする */
-.nav-links a:hover::before {
-    content: '▶'; position: absolute; left: -15px; color: var(--accent-gold);
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 0.95rem;
+    transition: color 0.2s;
 }
 
-/* 言語切り替えボタン */
+.nav-links a:hover { color: var(--accent); }
+
+/* 言語ボタン（シンプルに） */
 .btn-lang {
-    background: none; border: 1px solid var(--window-border);
-    color: var(--text-color); padding: 2px 8px; font-family: var(--font-family);
-    cursor: pointer; font-size: 0.8rem; margin-left: 5px;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 3px 10px;
+    cursor: pointer;
+    font-family: var(--font-dq);
+    border-radius: 4px;
 }
-.btn-lang:hover { background: var(--text-color); color: black; }
 
-/* --- ドラクエ風メッセージウィンドウ --- */
-.container { max-width: 800px; margin: 40px auto; padding: 20px; }
-.dq-window {
-    background: rgba(0,0,0,0.9);
-    border: 4px solid var(--window-border);
+/* コンテンツ部分（真面目なレイアウト） */
+.container {
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.content-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 40px;
     border-radius: 8px;
-    padding: 30px;
-    box-shadow: 0 0 0 2px black inset; /* 内側の黒枠 */
 }
 
-h1, h2 { color: var(--accent-gold); text-align: center; }
-p { font-size: 1.1rem; line-height: 1.8; }
+h1 { font-size: 1.8rem; margin-bottom: 20px; color: var(--accent); }
+p { margin-bottom: 1.5rem; color: var(--text-primary); }
+
+/* フッター */
+footer {
+    text-align: center;
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
