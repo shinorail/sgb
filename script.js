@@ -7,6 +7,17 @@ const i18n = {
         'sim-title': 'サーバー・シミュレーター',
         'terms-h1': 'SGB 利用規約',
         'terms-body': `第1条（目的）
+        // ja の中に追加
+'nav-support': 'サポート',
+'sup-h1': 'サポート・公式サーバー',
+'sup-p': 'SGBを実際に体験したり、開発者に質問ができる公式コミュニティです。',
+'sup-btn': '公式サーバーに参加する',
+'faq-h1': 'よくある質問',
+'faq-q1': 'Q. 利用料金はかかりますか？',
+'faq-a1': 'A. すべて無料で遊べます。',
+'faq-q2': 'Q. データが消えました。',
+'faq-a2': 'A. 開発者の r.m031y までお問い合わせください。',
+
 本規約は、開発者r.m031y（以下「運営」）が提供するDiscord Bot「SGB」（以下「本サービス」）の利用条件を定めるものです。
 第2条（同意）
 ユーザーは、本サービスをサーバーに追加、またはコマンドを実行した時点で、本規約およびプライバシーポリシーに同意したものとみなされます。
@@ -35,6 +46,16 @@ const i18n = {
         'priv-h1': 'Privacy Policy',
         'priv-body': `1. Collected Data: Discord ID, Server ID... 2. Purpose: Gaming & Rankings...`,
         'footer': '© 2026 SGB Project'
+        // en の中に追加
+'nav-support': 'Support',
+'sup-h1': 'Support & Official Server',
+'sup-p': 'The official community where you can try SGB and ask questions.',
+'sup-btn': 'Join Official Server',
+'faq-h1': 'FAQ',
+'faq-q1': 'Q. Is it free to use?',
+'faq-a1': 'A. Yes, it is completely free.',
+'faq-q2': 'Q. My data is gone.',
+'faq-a2': 'A. Please contact the developer, r.m031y.',
     }
 };
 
