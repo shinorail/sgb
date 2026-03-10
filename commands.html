@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide & Reference | SGB PROJECT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
+        
+        :root {
+            --primary: #60a5fa;
+            --secondary: #c084fc;
+            --bg-dark: #020617;
+        }
+
+        body { 
+            font-family: 'Noto Sans JP', sans-serif; 
+            background-color: var(--bg-dark); 
+            color: #f1f5f9; 
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        .glass { 
+            background: rgba(15, 23, 42, 0.7); 
+            backdrop-filter: blur(20px); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+        }
+
+        .gradient-text { 
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .tab-btn.active {
+            border-bottom: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        /* モバイルメニュー */
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%);
+        }
+        #mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        code {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #fbbf24;
+        }
+    </style>
+</head>
+<body class="selection:bg-sky-500/30">
+
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- ナビゲーション -->
+    <nav class="sticky top-0 z-50 glass px-4 md:px-8 py-4 flex justify-between items-center border-b border-white/10">
+        <div class="flex items-center gap-3">
+            <a href="index.html" class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-sky-500 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-sky-500/20">
+                    <i class="fas fa-sword text-white animate-pulse"></i>
+                </div>
+                <span class="text-xl font-black tracking-tighter">SGB <span class="text-sky-400">PROJECT</span></span>
+            </a>
+        </div>
+
+        <div class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-widest">
+            <a href="index.html" class="hover:text-sky-400 transition">Home</a>
+            <a href="index.html#monster" class="hover:text-sky-400 transition">Bestiary</a>
+            <a href="https://discord.gg/cV9ECW5KG2" target="_blank" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-full transition shadow-lg shadow-indigo-500/30">Join Discord</a>
+        </div>
+
+        <button id="menu-btn" class="lg:hidden text-white">
+            <i class="fas fa-bars text-2xl"></i>
+        </button>
+    </nav>
+
+    <!-- モバイルメニュー -->
+    <div id="mobile-menu" class="fixed inset-0 z-[60] glass flex flex-col items-center justify-center gap-8 lg:hidden">
+        <button id="close-btn" class="absolute top-6 right-6 text-white text-3xl">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="index.html" class="text-2xl font-black">HOME</a>
+        <a href="https://discord.gg/cV9ECW5KG2" target="_blank" class="text-2xl font-black text-indigo-400">DISCORD</a>
+    </div>
+
+    <!-- メインコンテンツ -->
+    <div class="max-w-6xl mx-auto px-6 py-20">
+        
+        <header class="mb-16 text-center" data-aos="fade-up">
+            <h1 class="text-5xl font-black mb-4">GUIDE & <span class="gradient-text">REFERENCE</span></h1>
+            <p class="text-slate-400">冒険に必要なすべての知識がここにあります</p>
+        </header>
+
+        <!-- タブナビゲーション -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12 border-b border-white/10" data-aos="fade-up">
+            <button class="tab-btn active px-6 py-3 font-bold transition" onclick="showTab('commands')">
+                <i class="fas fa-terminal mr-2"></i>コマンド一覧
+            </button>
+            <button class="tab-btn px-6 py-3 font-bold transition" onclick="showTab('changelog')">
+                <i class="fas fa-history mr-2"></i>アップデート履歴
+            </button>
+            <button class="tab-btn px-6 py-3 font-bold transition" onclick="showTab('news')">
+                <i class="fas fa-bullhorn mr-2"></i>お知らせ
+            </button>
+            <button class="tab-btn px-6 py-3 font-bold transition" onclick="showTab('faq')">
+                <i class="fas fa-question-circle mr-2"></i>FAQ
+            </button>
+        </div>
+
+        <!-- タブコンテンツ: コマンド -->
+        <div id="commands" class="tab-content active space-y-12" data-aos="fade-up">
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- 育成系 -->
+                <div class="glass p-8 rounded-3xl border-l-4 border-sky-500">
+                    <h3 class="text-xl font-bold mb-6 flex items-center gap-3">
+                        <i class="fas fa-user-plus text-sky-500"></i> 育成・ステータス
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex justify-between items-start border-b border-white/5 pb-2">
+                            <div>
+                                <code class="/profile</code>
+                                <p class="text-xs text-slate-400 mt-1">自分のステータスと装備を確認します。</p>
+                            </div>
+                        </li>
+                        <li class="flex justify-between items-start border-b border-white/5 pb-2">
+                            <div>
+                                <code class="/inventory</code>
+                                <p class="text-xs text-slate-400 mt-1">所持しているアイテムや素材を表示します。</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- 戦闘系 -->
+                <div class="glass p-8 rounded-3xl border-l-4 border-red-500">
+                    <h3 class="text-xl font-bold mb-6 flex items-center gap-3">
+                        <i class="fas fa-sword text-red-500"></i> 戦闘・冒険
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex justify-between items-start border-b border-white/5 pb-2">
+                            <div>
+                                <code class="/adventure</code>
+                                <p class="text-xs text-slate-400 mt-1">自動探索を開始し、経験値とゴールドを稼ぎます。</p>
+                            </div>
+                        </li>
+                        <li class="flex justify-between items-start border-b border-white/5 pb-2">
+                            <div>
+                                <code class="/boss</code>
+                                <p class="text-xs text-slate-400 mt-1">強力なレイドボスに挑戦します（要チケット）。</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- 経済系 -->
+                <div class="glass p-8 rounded-3xl border-l-4 border-yellow-500">
+                    <h3 class="text-xl font-bold mb-6 flex items-center gap-3">
+                        <i class="fas fa-coins text-yellow-500"></i> 経済・ショップ
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex justify-between items-start border-b border-white/5 pb-2">
+                            <div>
+                                <code class="/shop</code>
+                                <p class="text-xs text-slate-400 mt-1">装備や消耗品を購入できるショップを開きます。</p>
+                            </div>
+                        </li>
+                        <li class="flex justify-between items-start border-b border-white/5 pb-2">
+                            <div>
+                                <code class="/gamble</code>
+                                <p class="text-xs text-slate-400 mt-1">ゴールドを賭けてダイス勝負をします（自己責任）。</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- タブコンテンツ: アップデート履歴 -->
+        <div id="changelog" class="tab-content space-y-8">
+            <div class="relative pl-8 border-l-2 border-sky-500/30 space-y-12">
+                <div class="relative">
+                    <div class="absolute -left-[41px] top-0 w-4 h-4 rounded-full bg-sky-500 shadow-[0_0_15px_rgba(14,165,233,0.5)]"></div>
+                    <span class="text-sky-400 font-bold">2026.03.10</span>
+                    <h3 class="text-2xl font-black mt-2 uppercase">v2.6.0 "Gold Rush"</h3>
+                    <ul class="mt-4 space-y-2 text-slate-400 text-sm list-disc pl-5">
+                        <li>新エリア「黄金の砂漠」を追加。</li>
+                        <li>ギルド対抗戦システムのベータ版を公開。</li>
+                        <li>一部モンスターのバランス調整。</li>
+                    </ul>
+                </div>
+                <div class="relative">
+                    <div class="absolute -left-[41px] top-0 w-4 h-4 rounded-full bg-slate-700"></div>
+                    <span class="text-slate-500 font-bold">2026.02.15</span>
+                    <h3 class="text-2xl font-black mt-2 uppercase">v2.5.4 Maintenance</h3>
+                    <ul class="mt-4 space-y-2 text-slate-400 text-sm list-disc pl-5">
+                        <li>サーバーパフォーマンスの最適化。</li>
+                        <li>UIの視認性を改善。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- タブコンテンツ: お知らせ -->
+        <div id="news" class="tab-content">
+            <div class="grid md:grid-cols-2 gap-6">
+                <article class="glass rounded-3xl overflow-hidden group">
+                    <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=800');"></div>
+                    <div class="p-6">
+                        <span class="bg-sky-500 text-[10px] font-bold px-2 py-1 rounded text-white mb-4 inline-block">EVENT</span>
+                        <h4 class="text-xl font-bold mb-2 group-hover:text-sky-400 transition">春の経験値1.5倍キャンペーン開始！</h4>
+                        <p class="text-slate-400 text-sm mb-4">期間限定で全ての探索で獲得できる経験値が増加します。この機会にレベルアップを目指そう。</p>
+                        <time class="text-[10px] text-slate-600 font-bold">POSTED ON MARCH 5, 2026</time>
+                    </div>
+                </article>
+                <article class="glass rounded-3xl overflow-hidden group border border-white/10">
+                    <div class="h-48 bg-cover bg-center grayscale group-hover:grayscale-0 transition duration-500" style="background-image: url('https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=800');"></div>
+                    <div class="p-6">
+                        <span class="bg-purple-500 text-[10px] font-bold px-2 py-1 rounded text-white mb-4 inline-block">DEV BLOG</span>
+                        <h4 class="text-xl font-bold mb-2 group-hover:text-purple-400 transition">次期大型アップデート「天空城」の構想</h4>
+                        <p class="text-slate-400 text-sm mb-4">開発チームが現在取り組んでいる、全く新しい探索レイヤーについての先行情報を公開します。</p>
+                        <time class="text-[10px] text-slate-600 font-bold">POSTED ON FEBRUARY 28, 2026</time>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <!-- タブコンテンツ: FAQ -->
+        <div id="faq" class="tab-content max-w-3xl mx-auto space-y-4">
+            <details class="glass rounded-2xl group overflow-hidden">
+                <summary class="p-6 flex justify-between items-center cursor-pointer font-bold hover:bg-white/5 transition">
+                    Q. キャラクターが死んだらデータは消えますか？
+                    <i class="fas fa-plus group-open:rotate-45 transition text-sky-400"></i>
+                </summary>
+                <div class="p-6 text-slate-400 text-sm border-t border-white/5 bg-white/2">
+                    いいえ、消えません。ただし、一定時間のデスペナルティ（ステータス低下）が発生する場合があります。
+                </div>
+            </details>
+            <details class="glass rounded-2xl group overflow-hidden">
+                <summary class="p-6 flex justify-between items-center cursor-pointer font-bold hover:bg-white/5 transition">
+                    Q. 課金要素はありますか？
+                    <i class="fas fa-plus group-open:rotate-45 transition text-sky-400"></i>
+                </summary>
+                <div class="p-6 text-slate-400 text-sm border-t border-white/5 bg-white/2">
+                    SGBは完全無料でプレイ可能です。サーバー維持のための寄付は受け付けていますが、ゲームバランスを壊す「Pay to Win」の要素はありません。
+                </div>
+            </details>
+        </div>
+
+    </div>
+
+    <!-- フッター -->
+    <footer class="py-16 glass border-t border-white/10 text-center">
+        <div class="text-[10px] tracking-[0.5em] font-black text-slate-600 mb-4 uppercase">Architect: r.m031y</div>
+        <p class="text-slate-700 text-[10px] font-bold">&copy; 2026 SGB PROJECT | REFERENCE PAGE</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800 });
+
+        // タブ切り替え
+        function showTab(tabId) {
+            const contents = document.querySelectorAll('.tab-content');
+            const btns = document.querySelectorAll('.tab-btn');
+            
+            contents.forEach(content => content.classList.remove('active'));
+            btns.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // モバイルメニュー
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => mobileMenu.classList.add('active'));
+        closeBtn.addEventListener('click', () => mobileMenu.classList.remove('active'));
+
+        // 背景パーティクル
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function initCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5;
+                this.speed = Math.random() * 0.2 + 0.1;
+                this.opacity = Math.random() * 0.3;
+            }
+            update() { this.y -= this.speed; if (this.y < 0) this.y = canvas.height; }
+            draw() { ctx.fillStyle = `rgba(96, 165, 250, ${this.opacity})`; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
+        }
+        function createParticles() { particles = []; for (let i = 0; i < 50; i++) particles.push(new Particle()); }
+        function animate() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
+        window.addEventListener('resize', () => { initCanvas(); createParticles(); });
+        initCanvas(); createParticles(); animate();
+    </script>
+</body>
+</html>
