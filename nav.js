@@ -7,8 +7,8 @@ const Navigation = {
         { name: 'About', url: 'index.html#about' },
         { name: 'Bestiary', url: 'index.html#monster' },
         { name: 'Guide', url: 'commands.html' },
-        // 秘密のページへのリンクを追加
-        { name: 'Secret', url: 'secret.html', isSecret: true }
+        // URLパラメータ付きのリンクに変更（簡易認証用）
+        { name: 'Secret', url: 'secret.html?auth=sgb_member_access', isSecret: true }
     ],
     discordUrl: 'https://discord.gg/cV9ECW5KG2',
 
