@@ -81,5 +81,4 @@ const Navigation = {
 
 // ページの読み込み完了時に実行
 document.addEventListener('DOMContentLoaded', () => {
-    Navigation.render();
-});
+    Naviga
