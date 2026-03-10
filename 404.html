@@ -3,88 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 Not Found | SGB</title>
-    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+    <title>404 - 迷い込んだ冒険者へ | SGB PROJECT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --bg-color: #000000;
-            --border-color: #ffffff;
-            --text-color: #ffffff;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'DotGothic16', sans-serif;
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
+        
+        body { 
+            font-family: 'Noto Sans JP', sans-serif; 
+            background-color: #020617; 
+            color: #f1f5f9; 
+            overflow: hidden;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             height: 100vh;
             margin: 0;
-            flex-direction: column;
         }
 
-        /* ドラクエ風メッセージウィンドウ */
-        .window {
-            border: 4px solid var(--border-color);
-            border-radius: 8px;
-            padding: 30px;
-            max-width: 500px;
-            width: 80%;
-            position: relative;
-            background-color: var(--bg-color);
-            box-shadow: 0 0 0 4px var(--bg-color), 0 0 0 8px var(--border-color);
+        .glass { 
+            background: rgba(15, 23, 42, 0.7); 
+            backdrop-filter: blur(20px); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
         }
 
-        .message {
-            font-size: 1.5rem;
-            line-height: 2;
-            margin-bottom: 20px;
+        .gradient-text { 
+            background: linear-gradient(135deg, #60a5fa, #c084fc); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
         }
 
-        /* 点滅するカーソル（▼） */
-        .cursor {
-            display: inline-block;
-            width: 0;
-            height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-top: 15px solid var(--border-color);
-            animation: blink 0.8s infinite;
-            float: right;
+        .floating {
+            animation: floating 3s ease-in-out infinite;
         }
 
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0; }
-            100% { opacity: 1; }
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
 
-        .back-link {
-            display: block;
-            margin-top: 40px;
-            color: #5865F2;
-            text-decoration: none;
-            font-size: 1.2rem;
-        }
-
-        .back-link:hover {
-            color: #ffffff;
-            text-decoration: underline;
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
 <body>
 
-    <div class="window">
-        <div class="message">
-            おっと！　ページが　みつからない　ようだ。<br>
-            どうやら　まものに　たべられて　しまったらしい！
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="max-w-xl w-full px-6 text-center z-10">
+        <div class="mb-8 floating">
+            <span class="text-9x1 font-black opacity-10 absolute inset-0 flex items-center justify-center -z-10 select-none" style="font-size: 15rem;">404</span>
+            <i class="fas fa-compass text-7xl text-sky-500 mb-6"></i>
         </div>
-        <div class="cursor"></div>
+        
+        <h1 class="text-4xl font-black mb-4 tracking-tighter">道に迷いましたか？</h1>
+        
+        <div class="glass p-8 rounded-[32px] mb-10 border border-white/10">
+            <p class="text-slate-400 leading-relaxed mb-6">
+                おっと、ここはマップの端のようです。<br>
+                指定されたページは存在しないか、モンスターに食べられてしまった可能性があります。
+            </p>
+            <div class="text-left bg-black/40 p-4 rounded-xl font-mono text-sm border border-white/5">
+                <p class="text-red-400">> Error: Page_Not_Found</p>
+                <p class="text-slate-500">> Searching for alternative routes...</p>
+                <p class="text-green-400">> Found: /home</p>
+            </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="index.html" class="bg-sky-500 hover:bg-sky-400 text-white font-black py-4 px-10 rounded-2xl transition shadow-xl shadow-sky-500/20">
+                拠点の町へ戻る
+            </a>
+            <a href="https://discord.gg/cV9ECW5KG2" target="_blank" class="glass font-bold py-4 px-10 rounded-2xl hover:bg-white/10 transition border border-white/10">
+                ギルドで報告する
+            </a>
+        </div>
     </div>
 
-    <a href="index.html" class="back-link">▶ おしろ（ホーム）に　もどる</a>
+    <script>
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
 
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.speed = Math.random() * 0.3 + 0.05;
+                this.opacity = Math.random() * 0.3;
+            }
+            update() {
+                this.y -= this.speed;
+                if (this.y < 0) {
+                    this.y = canvas.height;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                ctx.fillStyle = `rgba(96, 165, 250, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function createParticles() {
+            particles = [];
+            for (let i = 0; i < 60; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            initCanvas();
+            createParticles();
+        });
+
+        initCanvas();
+        createParticles();
+        animate();
+    </script>
 </body>
 </html>
