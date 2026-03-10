@@ -16,12 +16,13 @@
         color: #f1f5f9; 
         margin: 0;
         overflow-x: hidden;
+        scroll-behavior: smooth;
     }
 
     .glass { 
-        background: rgba(15, 23, 42, 0.8); 
-        backdrop-filter: blur(20px); 
-        border: 1px solid rgba(255, 255, 255, 0.05); 
+        background: rgba(15, 23, 42, 0.85); 
+        backdrop-filter: blur(15px); 
+        border: 1px solid rgba(255, 255, 255, 0.08); 
     }
 
     .gradient-text { 
@@ -30,50 +31,86 @@
         -webkit-text-fill-color: transparent; 
     }
 
-    #mobile-menu { 
-        transition: transform 0.3s ease-in-out; 
-        transform: translateX(100%); 
+    .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease-out;
+    }
+
+    .animate-on-scroll.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    #mobile-menu {
+        transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+        transform: translateX(100%);
+    }
+
+    #mobile-menu.active {
+        transform: translateX(0);
+    }
+
+    #custom-alert {
+        display: none;
+        position: fixed;
+        z-index: 10000;
+        background: rgba(15, 23, 42, 0.95);
+        border: 1px solid #38bdf8;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-weight: bold;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        pointer-events: none;
+    }
+
+    .hero-gradient {
+        background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.1) 0%, transparent 50%);
     }
 </style>
 </head>
-<body>
-<nav class="fixed top-0 left-0 w-full z-50 glass px-4 md:px-8 py-4 flex justify-between items-center border-b border-white/10">
-<div class="flex items-center gap-3">
-<a href="index.html" class="flex items-center gap-3 text-white no-underline">
-<div class="w-10 h-10 bg-gradient-to-br from-sky-500 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-sky-500/20">
-<i class="fas fa-sword text-white"></i>
-</div>
-<span class="text-xl font-black tracking-tighter">SGB <span class="text-sky-400">PROJECT</span></span>
-</a>
-</div>
+<body oncontextmenu="return showAlert(event);">
 
-    <div class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-widest">
+<div id="custom-alert">画像として保存してください</div>
+
+<nav class="fixed top-0 left-0 w-full z-50 glass px-6 py-4 flex justify-between items-center border-b border-white/10">
+    <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-3 text-white no-underline">
+            <div class="w-10 h-10 bg-gradient-to-br from-sky-500 to-indigo-600 rounded-lg flex items-center justify-center">
+                <i class="fas fa-sword text-white"></i>
+            </div>
+            <span class="text-xl font-black tracking-tighter">SGB <span class="text-sky-400">PROJECT</span></span>
+        </a>
+    </div>
+
+    <div class="hidden lg:flex items-center gap-8 text-xs font-bold uppercase tracking-widest">
         <a href="index.html" class="text-white hover:text-sky-400 transition no-underline">Home</a>
         <a href="#about" class="text-white hover:text-sky-400 transition no-underline">About</a>
         <a href="#monster" class="text-white hover:text-sky-400 transition no-underline">Bestiary</a>
         <a href="commands.html" class="text-white hover:text-sky-400 transition no-underline">Guide</a>
-        <a href="[https://discord.gg/cV9ECW5KG2](https://discord.gg/cV9ECW5KG2)" target="_blank" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-full transition shadow-lg shadow-indigo-500/30 no-underline">Join Discord</a>
+        <a href="[https://discord.gg/cV9ECW5KG2](https://discord.gg/cV9ECW5KG2)" target="_blank" class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2 rounded-full transition shadow-lg shadow-indigo-500/40 no-underline">Join Discord</a>
     </div>
 
-    <button id="menu-btn" class="lg:hidden text-white bg-transparent border-none cursor-pointer">
+    <button id="menu-btn" class="lg:hidden text-white focus:outline-none">
         <i class="fas fa-bars text-2xl"></i>
     </button>
 </nav>
 
-<div id="mobile-menu" class="fixed inset-0 z-[60] bg-slate-950/98 backdrop-blur-xl flex flex-col items-center justify-center gap-8 lg:hidden translate-x-full">
-    <button id="close-btn" class="absolute top-6 right-6 text-white text-3xl bg-transparent border-none cursor-pointer">
+<div id="mobile-menu" class="fixed inset-0 z-[60] bg-slate-950 flex flex-col items-center justify-center gap-8 lg:hidden">
+    <button id="close-btn" class="absolute top-6 right-8 text-white text-3xl">
         <i class="fas fa-times"></i>
     </button>
-    <a href="index.html" class="text-2xl font-black uppercase text-white no-underline">Home</a>
-    <a href="#about" class="text-2xl font-black uppercase text-white no-underline">About</a>
-    <a href="#monster" class="text-2xl font-black uppercase text-white no-underline">Bestiary</a>
-    <a href="commands.html" class="text-2xl font-black uppercase text-white no-underline">Guide</a>
-    <a href="[https://discord.gg/cV9ECW5KG2](https://discord.gg/cV9ECW5KG2)" target="_blank" class="text-2xl font-black text-indigo-400 uppercase no-underline">Discord</a>
+    <a href="index.html" class="text-3xl font-black uppercase text-white no-underline">Home</a>
+    <a href="#about" class="text-3xl font-black uppercase text-white no-underline">About</a>
+    <a href="#monster" class="text-3xl font-black uppercase text-white no-underline">Bestiary</a>
+    <a href="commands.html" class="text-3xl font-black uppercase text-white no-underline">Guide</a>
+    <a href="[https://discord.gg/cV9ECW5KG2](https://discord.gg/cV9ECW5KG2)" target="_blank" class="text-xl font-black text-indigo-400 no-underline border-b border-indigo-400 pb-1">Discord Join</a>
 </div>
 
-<header class="relative pt-48 pb-24 px-6 text-center">
-    <div class="max-w-4xl mx-auto">
-        <h1 class="text-6xl md:text-8xl font-black mb-8 leading-[1.1] tracking-tight text-white">
+<header class="relative pt-48 pb-24 px-6 text-center hero-gradient">
+    <div class="max-w-4xl mx-auto animate-on-scroll show">
+        <h1 class="text-6xl md:text-8xl font-black mb-8 leading-[1.1] tracking-tight">
             新時代の<br><span class="gradient-text">放置型RPG。</span>
         </h1>
         <p class="text-xl text-slate-400 mb-12 max-w-2xl mx-auto">
@@ -91,51 +128,47 @@
 </header>
 
 <main class="max-w-6xl mx-auto px-6 space-y-40 pb-40">
-    <section id="about" class="grid lg:grid-cols-2 gap-16 items-center">
+    <section id="about" class="grid lg:grid-cols-2 gap-16 items-center animate-on-scroll">
         <div>
-            <h2 class="text-4xl font-black mb-8 italic underline decoration-sky-500 underline-offset-8 text-white">
-                SGBとは？
+            <h2 class="text-4xl font-black mb-8 italic flex items-center gap-4">
+                <span class="h-10 w-2 bg-sky-500 rounded-full"></span>SGBとは？
             </h2>
             <p class="text-slate-300 text-lg leading-relaxed">
                 24時間稼働するサーバー上で、あなたのキャラクターは常に成長を続けます。仕事中も、睡眠中も、冒険は止まりません。
             </p>
         </div>
-        <div class="glass p-2 rounded-[40px] overflow-hidden">
-            <img src="[https://images.unsplash.com/photo-1614728263952-84ea256f9679?auto=format&fit=crop&q=80&w=800](https://images.unsplash.com/photo-1614728263952-84ea256f9679?auto=format&fit=crop&q=80&w=800)" alt="SGBの冒険" class="rounded-[32px] w-full h-[400px] object-cover">
+        <div class="glass p-4 rounded-[40px] overflow-hidden group">
+            <img src="[https://images.unsplash.com/photo-1614728263952-84ea256f9679?auto=format&fit=crop&q=80&w=800](https://images.unsplash.com/photo-1614728263952-84ea256f9679?auto=format&fit=crop&q=80&w=800)" alt="RPG世界の冒険イメージ" class="rounded-[32px] w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-110">
         </div>
     </section>
 
-    <section id="monster">
+    <section id="monster" class="animate-on-scroll">
         <div class="text-center mb-16">
-            <h2 class="text-4xl font-black mb-4 gradient-text uppercase tracking-widest">
-                Bestiary
-            </h2>
+            <h2 class="text-4xl font-black mb-4 gradient-text uppercase tracking-widest italic">Bestiary</h2>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div class="glass p-8 rounded-3xl border border-white/5 transition hover:border-sky-500/50">
-                <span class="text-4xl">🐲</span>
-                <h3 class="font-bold mt-4 text-white">ドラゴン</h3>
+            <div class="glass p-8 rounded-3xl border border-white/5 transition-all hover:border-sky-500/50 hover:scale-105">
+                <span class="text-5xl block mb-4">🐲</span>
+                <h3 class="font-bold text-white uppercase tracking-tighter text-lg">Dragon</h3>
             </div>
-            <div class="glass p-8 rounded-3xl border border-white/5 transition hover:border-sky-500/50">
-                <span class="text-4xl">🐺</span>
-                <h3 class="font-bold mt-4 text-white">ウルフ</h3>
+            <div class="glass p-8 rounded-3xl border border-white/5 transition-all hover:border-sky-500/50 hover:scale-105">
+                <span class="text-5xl block mb-4">🐺</span>
+                <h3 class="font-bold text-white uppercase tracking-tighter text-lg">Wolf</h3>
             </div>
-            <div class="glass p-8 rounded-3xl border border-white/5 transition hover:border-sky-500/50">
-                <span class="text-4xl">🧙</span>
-                <h3 class="font-bold mt-4 text-white">メイジ</h3>
+            <div class="glass p-8 rounded-3xl border border-white/5 transition-all hover:border-sky-500/50 hover:scale-105">
+                <span class="text-5xl block mb-4">🧙</span>
+                <h3 class="font-bold text-white uppercase tracking-tighter text-lg">Mage</h3>
             </div>
-            <div class="glass p-8 rounded-3xl border border-white/5 transition hover:border-sky-500/50">
-                <span class="text-4xl">💎</span>
-                <h3 class="font-bold mt-4 text-white">スライム</h3>
+            <div class="glass p-8 rounded-3xl border border-white/5 transition-all hover:border-sky-500/50 hover:scale-105">
+                <span class="text-5xl block mb-4">💎</span>
+                <h3 class="font-bold text-white uppercase tracking-tighter text-lg">Slime</h3>
             </div>
         </div>
     </section>
 </main>
 
-<footer class="py-16 glass border-t border-white/10 text-center">
-    <p class="text-slate-700 text-[10px] font-bold tracking-[0.3em] uppercase">
-        &copy; 2026 SGB PROJECT | ALL RIGHTS RESERVED
-    </p>
+<footer class="py-20 glass border-t border-white/10 text-center">
+    <p class="text-slate-600 text-[10px] font-black tracking-[0.5em] uppercase text-white">&copy; 2026 SGB PROJECT | ALL RIGHTS RESERVED</p>
 </footer>
 
 <script>
@@ -143,19 +176,38 @@
     const closeBtn = document.getElementById('close-btn');
     const mobileMenu = document.getElementById('mobile-menu');
 
-    menuBtn.onclick = () => {
-        mobileMenu.classList.remove('translate-x-full');
-    };
+    menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.add('active');
+    });
 
-    closeBtn.onclick = () => {
-        mobileMenu.classList.add('translate-x-full');
-    };
+    closeBtn.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+    });
 
     mobileMenu.querySelectorAll('a').forEach(link => {
-        link.onclick = () => {
-            mobileMenu.classList.add('translate-x-full');
-        };
+        link.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
     });
+
+    function showAlert(e) {
+        const alertBox = document.getElementById('custom-alert');
+        alertBox.style.display = 'block';
+        alertBox.style.left = (e.clientX > window.innerWidth - 200 ? e.clientX - 200 : e.clientX) + 'px';
+        alertBox.style.top = e.clientY + 'px';
+        setTimeout(() => { alertBox.style.display = 'none'; }, 1500);
+        return false;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
