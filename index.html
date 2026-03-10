@@ -1,202 +1,171 @@
 <!DOCTYPE html>
+
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - 迷い込んだ冒険者へ | SGB PROJECT</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
-        
-        body { 
-            font-family: 'Noto Sans JP', sans-serif; 
-            background-color: #020617; 
-            color: #f1f5f9; 
-            overflow-x: hidden;
-            margin: 0;
-        }
-
-        .glass { 
-            background: rgba(15, 23, 42, 0.7); 
-            backdrop-filter: blur(20px); 
-            border: 1px solid rgba(255, 255, 255, 0.05); 
-        }
-
-        .gradient-text { 
-            background: linear-gradient(135deg, #60a5fa, #c084fc); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-        }
-
-        .floating {
-            animation: floating 3s ease-in-out infinite;
-        }
-
-        @keyframes floating {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        #bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* ハンバーガーメニューの開閉アニメーション */
-        #mobile-menu {
-            transition: transform 0.3s ease-in-out;
-            transform: translateX(100%);
-        }
-        #mobile-menu.active {
-            transform: translateX(0);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SGB Official Portal</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
+body {
+font-family: 'Noto Sans JP', sans-serif;
+background-color: #020617;
+color: #f1f5f9;
+scroll-behavior: smooth;
+overflow-x: hidden;
+}
+.glass {
+background: rgba(15, 23, 42, 0.7);
+backdrop-filter: blur(20px);
+border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.gradient-text {
+background: linear-gradient(135deg, #60a5fa, #c084fc);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+#bg-canvas {
+position: fixed;
+top: 0;
+left: 0;
+z-index: -1;
+width: 100%;
+height: 100%;
+}
+#mobile-menu {
+transition: transform 0.3s ease-in-out;
+transform: translateX(100%);
+}
+#mobile-menu.active {
+transform: translateX(0);
+}
+</style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body>
+<canvas id="bg-canvas"></canvas>
+<div id="nav-container"></div>
 
-    <canvas id="bg-canvas"></canvas>
-
-    <!-- ナビゲーション -->
-    <nav class="fixed top-0 w-full z-50 glass px-6 py-4 flex justify-between items-center border-b border-white/10">
-        <div class="flex items-center gap-3">
-            <div class="w-8 h-8 bg-gradient-to-br from-sky-500 to-indigo-600 rounded-lg flex items-center justify-center">
-                <i class="fas fa-sword text-white text-sm"></i>
-            </div>
-            <span class="text-lg font-black tracking-tighter">SGB <span class="text-sky-400">PROJECT</span></span>
-        </div>
-        
-        <!-- PCリンク -->
-        <div class="hidden md:flex items-center gap-6 text-xs font-bold uppercase tracking-widest">
-            <a href="index.html#about" class="hover:text-sky-400 transition">About</a>
-            <a href="index.html#tutorial" class="hover:text-sky-400 transition">Tutorial</a>
-            <a href="https://discord.gg/cV9ECW5KG2" target="_blank" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-full transition">Guild</a>
-        </div>
-
-        <!-- ハンバーガーボタン -->
-        <button id="menu-btn" class="md:hidden text-white focus:outline-none">
-            <i class="fas fa-bars text-xl"></i>
-        </button>
-    </nav>
-
-    <!-- モバイルメニューオーバーレイ -->
-    <div id="mobile-menu" class="fixed inset-0 z-[60] glass flex flex-col items-center justify-center gap-8 md:hidden">
-        <button id="close-btn" class="absolute top-6 right-6 text-white text-2xl">
-            <i class="fas fa-times"></i>
-        </button>
-        <a href="index.html" class="text-2xl font-black hover:text-sky-400">HOME</a>
-        <a href="index.html#about" class="text-2xl font-black hover:text-sky-400">ABOUT</a>
-        <a href="index.html#tutorial" class="text-2xl font-black hover:text-sky-400">TUTORIAL</a>
-        <a href="https://discord.gg/cV9ECW5KG2" target="_blank" class="text-2xl font-black text-indigo-400">DISCORD</a>
-    </div>
-
-    <!-- コンテンツ -->
-    <div class="flex-grow flex items-center justify-center pt-20">
-        <div class="max-w-xl w-full px-6 text-center z-10">
-            <div class="mb-8 floating relative">
-                <span class="text-9x1 font-black opacity-10 absolute inset-0 flex items-center justify-center -z-10 select-none" style="font-size: 12rem; top: 50%; transform: translateY(-50%);">404</span>
-                <i class="fas fa-compass text-7xl text-sky-500 mb-6"></i>
-            </div>
-            
-            <h1 class="text-4xl font-black mb-4 tracking-tighter">道に迷いましたか？</h1>
-            
-            <div class="glass p-8 rounded-[32px] mb-10 border border-white/10">
-                <p class="text-slate-400 leading-relaxed mb-6">
-                    おっと、ここはマップの端のようです。<br>
-                    指定されたページは存在しないか、モンスターに食べられてしまった可能性があります。
-                </p>
-                <div class="text-left bg-black/40 p-4 rounded-xl font-mono text-sm border border-white/5">
-                    <p class="text-red-400">> Error: Page_Not_Found</p>
-                    <p class="text-slate-500">> Searching for alternative routes...</p>
-                    <p class="text-green-400">> Found: /home</p>
-                </div>
-            </div>
-
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="index.html" class="bg-sky-500 hover:bg-sky-400 text-white font-black py-4 px-10 rounded-2xl transition shadow-xl shadow-sky-500/20">
-                    拠点の町へ戻る
-                </a>
-                <a href="https://discord.gg/cV9ECW5KG2" target="_blank" class="glass font-bold py-4 px-10 rounded-2xl hover:bg-white/10 transition border border-white/10">
-                    ギルドで報告する
-                </a>
-            </div>
+<header class="relative pt-32 pb-24 px-6 text-center">
+    <div class="max-w-4xl mx-auto relative z-10" data-aos="fade-up">
+        <h1 class="text-6xl md:text-8xl font-black mb-8 leading-[1.1] tracking-tight">
+            新時代の<br><span class="gradient-text">放置型RPG。</span>
+        </h1>
+        <p class="text-xl text-slate-400 mb-12 max-w-2xl mx-auto">
+            Discordを開くだけで、そこは異世界。
+        </p>
+        <div class="flex flex-wrap justify-center gap-6">
+            <a href="[https://discord.gg/cV9ECW5KG2](https://discord.gg/cV9ECW5KG2)" target="_blank" class="bg-sky-500 text-white font-black py-4 px-12 rounded-2xl shadow-lg shadow-sky-500/20 hover:scale-105 transition">
+                今すぐ開始
+            </a>
+            <a href="commands.html" class="glass font-bold py-4 px-12 rounded-2xl hover:bg-white/10 transition">
+                ガイドを見る
+            </a>
         </div>
     </div>
+</header>
 
-    <script>
-        // ハンバーガーメニュー制御
-        const menuBtn = document.getElementById('menu-btn');
-        const closeBtn = document.getElementById('close-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = mobileMenu.querySelectorAll('a');
+<main class="max-w-6xl mx-auto px-6 space-y-40 pb-40">
+    <section id="about" class="grid lg:grid-cols-2 gap-16 items-center" data-aos="fade-right">
+        <div>
+            <h2 class="text-4xl font-black mb-8 italic underline decoration-sky-500 underline-offset-8 text-white">
+                SGBとは？
+            </h2>
+            <p class="text-slate-300 text-lg leading-relaxed">
+                24時間稼働するサーバー上で、あなたのキャラクターは常に成長を続けます。仕事中も、睡眠中も、冒険は止まりません。
+            </p>
+        </div>
+        <div class="glass p-2 rounded-[40px] overflow-hidden">
+            <img src="[https://images.unsplash.com/photo-1614728263952-84ea256f9679?auto=format&fit=crop&q=80&w=800](https://images.unsplash.com/photo-1614728263952-84ea256f9679?auto=format&fit=crop&q=80&w=800)" alt="RPG Image" class="rounded-[32px] w-full h-[400px] object-cover">
+        </div>
+    </section>
 
-        menuBtn.addEventListener('click', () => mobileMenu.classList.add('active'));
-        closeBtn.addEventListener('click', () => mobileMenu.classList.remove('active'));
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => mobileMenu.classList.remove('active'));
+    <section id="monster" data-aos="fade-up">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-black mb-4 gradient-text uppercase tracking-widest">
+                Bestiary
+            </h2>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div class="glass p-8 rounded-3xl hover:border-sky-500/50 transition">
+                <span class="text-4xl">🐲</span>
+                <h3 class="font-bold mt-4 text-white">ドラゴン</h3>
+            </div>
+            <div class="glass p-8 rounded-3xl hover:border-sky-500/50 transition">
+                <span class="text-4xl">🐺</span>
+                <h3 class="font-bold mt-4 text-white">ウルフ</h3>
+            </div>
+            <div class="glass p-8 rounded-3xl hover:border-sky-500/50 transition">
+                <span class="text-4xl">🧙</span>
+                <h3 class="font-bold mt-4 text-white">メイジ</h3>
+            </div>
+            <div class="glass p-8 rounded-3xl hover:border-sky-500/50 transition">
+                <span class="text-4xl">💎</span>
+                <h3 class="font-bold mt-4 text-white">スライム</h3>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="py-16 glass border-t border-white/10 text-center">
+    <p class="text-slate-700 text-[10px] font-bold tracking-[0.3em] uppercase">
+        &copy; 2026 SGB PROJECT | ALL RIGHTS RESERVED
+    </p>
+</footer>
+
+<script src="[https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js](https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js)"></script>
+<script src="nav.js"></script>
+<script>
+    AOS.init({ duration: 1000, once: true });
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    function initCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2;
+            this.speed = Math.random() * 0.5 + 0.1;
+            this.opacity = Math.random() * 0.5;
+        }
+        update() {
+            this.y -= this.speed;
+            if (this.y < 0) this.y = canvas.height;
+        }
+        draw() {
+            ctx.fillStyle = `rgba(96, 165, 250, ${this.opacity})`;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+    function createParticles() {
+        particles = [];
+        for (let i = 0; i < 100; i++) {
+            particles.push(new Particle());
+        }
+    }
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
         });
-
-        // 背景パーティクル
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-
-        function initCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2;
-                this.speed = Math.random() * 0.3 + 0.05;
-                this.opacity = Math.random() * 0.3;
-            }
-            update() {
-                this.y -= this.speed;
-                if (this.y < 0) {
-                    this.y = canvas.height;
-                    this.x = Math.random() * canvas.width;
-                }
-            }
-            draw() {
-                ctx.fillStyle = `rgba(96, 165, 250, ${this.opacity})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function createParticles() {
-            particles = [];
-            for (let i = 0; i < 60; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animate);
-        }
-
-        window.addEventListener('resize', () => {
-            initCanvas();
-            createParticles();
-        });
-
+        requestAnimationFrame(animate);
+    }
+    window.addEventListener('resize', () => {
         initCanvas();
         createParticles();
-        animate();
-    </script>
+    });
+    initCanvas();
+    createParticles();
+    animate();
+</script>
 </body>
 </html>
