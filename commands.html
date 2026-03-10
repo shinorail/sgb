@@ -1,324 +1,240 @@
 <!DOCTYPE html>
+
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guide & Reference | SGB PROJECT</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
-        
-        :root {
-            --primary: #60a5fa;
-            --secondary: #c084fc;
-            --bg-dark: #020617;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SGB Guide - Commands & Policy</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
 
-        body { 
-            font-family: 'Noto Sans JP', sans-serif; 
-            background-color: var(--bg-dark); 
-            color: #f1f5f9; 
-            scroll-behavior: smooth;
-            overflow-x: hidden;
-        }
+    body { 
+        font-family: 'Noto Sans JP', sans-serif; 
+        background-color: #020617; 
+        color: #f1f5f9; 
+        margin: 0;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+    }
 
-        .glass { 
-            background: rgba(15, 23, 42, 0.7); 
-            backdrop-filter: blur(20px); 
-            border: 1px solid rgba(255, 255, 255, 0.05); 
-        }
+    .glass { 
+        background: rgba(15, 23, 42, 0.85); 
+        backdrop-filter: blur(15px); 
+        border: 1px solid rgba(255, 255, 255, 0.08); 
+    }
 
-        .gradient-text { 
-            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-        }
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
 
-        #bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            width: 100%;
-            height: 100%;
-        }
+    .animate-on-scroll {
+        opacity: 0;
+        transition: all 0.8s ease-out;
+    }
 
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+    .animate-on-scroll.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
-        .tab-btn.active {
-            border-bottom: 2px solid var(--primary);
-            color: var(--primary);
-        }
+    .gradient-text { 
+        background: linear-gradient(135deg, #60a5fa, #c084fc); 
+        -webkit-background-clip: text; 
+        -webkit-text-fill-color: transparent; 
+    }
 
-        /* モバイルメニュー */
-        #mobile-menu {
-            transition: transform 0.3s ease-in-out;
-            transform: translateX(100%);
-        }
-        #mobile-menu.active {
-            transform: translateX(0);
-        }
+    .command-card {
+        border-left: 4px solid #38bdf8;
+        background: rgba(255, 255, 255, 0.03);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translateY(20px);
+    }
 
-        code {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: monospace;
-            color: #fbbf24;
-        }
-    </style>
+    .command-card:hover {
+        background: rgba(56, 189, 248, 0.1);
+        transform: scale(1.02) translateX(10px);
+    }
+
+    #mobile-menu {
+        transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+        transform: translateX(100%);
+    }
+
+    #mobile-menu.active {
+        transform: translateX(0);
+    }
+
+    #custom-alert {
+        display: none;
+        position: fixed;
+        z-index: 10000;
+        background: rgba(15, 23, 42, 0.95);
+        border: 1px solid #38bdf8;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-weight: bold;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        pointer-events: none;
+    }
+</style>
 </head>
-<body class="selection:bg-sky-500/30">
+<body oncontextmenu="return showAlert(event);">
 
-    <canvas id="bg-canvas"></canvas>
+<div id="custom-alert">画像として保存してください</div>
 
-    <!-- ナビゲーション -->
-    <nav class="sticky top-0 z-50 glass px-4 md:px-8 py-4 flex justify-between items-center border-b border-white/10">
-        <div class="flex items-center gap-3">
-            <a href="index.html" class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-gradient-to-br from-sky-500 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-sky-500/20">
-                    <i class="fas fa-sword text-white animate-pulse"></i>
-                </div>
-                <span class="text-xl font-black tracking-tighter">SGB <span class="text-sky-400">PROJECT</span></span>
-            </a>
-        </div>
-
-        <div class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-widest">
-            <a href="index.html" class="hover:text-sky-400 transition">Home</a>
-            <a href="index.html#monster" class="hover:text-sky-400 transition">Bestiary</a>
-            <a href="https://discord.gg/cV9ECW5KG2" target="_blank" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-full transition shadow-lg shadow-indigo-500/30">Join Discord</a>
-        </div>
-
-        <button id="menu-btn" class="lg:hidden text-white">
-            <i class="fas fa-bars text-2xl"></i>
-        </button>
-    </nav>
-
-    <!-- モバイルメニュー -->
-    <div id="mobile-menu" class="fixed inset-0 z-[60] glass flex flex-col items-center justify-center gap-8 lg:hidden">
-        <button id="close-btn" class="absolute top-6 right-6 text-white text-3xl">
-            <i class="fas fa-times"></i>
-        </button>
-        <a href="index.html" class="text-2xl font-black">HOME</a>
-        <a href="https://discord.gg/cV9ECW5KG2" target="_blank" class="text-2xl font-black text-indigo-400">DISCORD</a>
+<nav class="fixed top-0 left-0 w-full z-50 glass px-6 py-4 flex justify-between items-center">
+    <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-3 text-white no-underline">
+            <div class="w-10 h-10 bg-gradient-to-br from-sky-500 to-indigo-600 rounded-lg flex items-center justify-center">
+                <i class="fas fa-sword text-white"></i>
+            </div>
+            <span class="text-xl font-black tracking-tighter text-white">SGB <span class="text-sky-400">PROJECT</span></span>
+        </a>
     </div>
 
-    <!-- メインコンテンツ -->
-    <div class="max-w-6xl mx-auto px-6 py-20">
-        
-        <header class="mb-16 text-center" data-aos="fade-up">
-            <h1 class="text-5xl font-black mb-4">GUIDE & <span class="gradient-text">REFERENCE</span></h1>
-            <p class="text-slate-400">冒険に必要なすべての知識がここにあります</p>
-        </header>
-
-        <!-- タブナビゲーション -->
-        <div class="flex flex-wrap justify-center gap-4 mb-12 border-b border-white/10" data-aos="fade-up">
-            <button class="tab-btn active px-6 py-3 font-bold transition" onclick="showTab('commands')">
-                <i class="fas fa-terminal mr-2"></i>コマンド一覧
-            </button>
-            <button class="tab-btn px-6 py-3 font-bold transition" onclick="showTab('changelog')">
-                <i class="fas fa-history mr-2"></i>アップデート履歴
-            </button>
-            <button class="tab-btn px-6 py-3 font-bold transition" onclick="showTab('news')">
-                <i class="fas fa-bullhorn mr-2"></i>お知らせ
-            </button>
-            <button class="tab-btn px-6 py-3 font-bold transition" onclick="showTab('faq')">
-                <i class="fas fa-question-circle mr-2"></i>FAQ
-            </button>
-        </div>
-
-        <!-- タブコンテンツ: コマンド -->
-        <div id="commands" class="tab-content active space-y-12" data-aos="fade-up">
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- 育成系 -->
-                <div class="glass p-8 rounded-3xl border-l-4 border-sky-500">
-                    <h3 class="text-xl font-bold mb-6 flex items-center gap-3">
-                        <i class="fas fa-user-plus text-sky-500"></i> 育成・ステータス
-                    </h3>
-                    <ul class="space-y-4">
-                        <li class="flex justify-between items-start border-b border-white/5 pb-2">
-                            <div>
-                                <code class="/profile</code>
-                                <p class="text-xs text-slate-400 mt-1">自分のステータスと装備を確認します。</p>
-                            </div>
-                        </li>
-                        <li class="flex justify-between items-start border-b border-white/5 pb-2">
-                            <div>
-                                <code class="/inventory</code>
-                                <p class="text-xs text-slate-400 mt-1">所持しているアイテムや素材を表示します。</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <!-- 戦闘系 -->
-                <div class="glass p-8 rounded-3xl border-l-4 border-red-500">
-                    <h3 class="text-xl font-bold mb-6 flex items-center gap-3">
-                        <i class="fas fa-sword text-red-500"></i> 戦闘・冒険
-                    </h3>
-                    <ul class="space-y-4">
-                        <li class="flex justify-between items-start border-b border-white/5 pb-2">
-                            <div>
-                                <code class="/adventure</code>
-                                <p class="text-xs text-slate-400 mt-1">自動探索を開始し、経験値とゴールドを稼ぎます。</p>
-                            </div>
-                        </li>
-                        <li class="flex justify-between items-start border-b border-white/5 pb-2">
-                            <div>
-                                <code class="/boss</code>
-                                <p class="text-xs text-slate-400 mt-1">強力なレイドボスに挑戦します（要チケット）。</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <!-- 経済系 -->
-                <div class="glass p-8 rounded-3xl border-l-4 border-yellow-500">
-                    <h3 class="text-xl font-bold mb-6 flex items-center gap-3">
-                        <i class="fas fa-coins text-yellow-500"></i> 経済・ショップ
-                    </h3>
-                    <ul class="space-y-4">
-                        <li class="flex justify-between items-start border-b border-white/5 pb-2">
-                            <div>
-                                <code class="/shop</code>
-                                <p class="text-xs text-slate-400 mt-1">装備や消耗品を購入できるショップを開きます。</p>
-                            </div>
-                        </li>
-                        <li class="flex justify-between items-start border-b border-white/5 pb-2">
-                            <div>
-                                <code class="/gamble</code>
-                                <p class="text-xs text-slate-400 mt-1">ゴールドを賭けてダイス勝負をします（自己責任）。</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- タブコンテンツ: アップデート履歴 -->
-        <div id="changelog" class="tab-content space-y-8">
-            <div class="relative pl-8 border-l-2 border-sky-500/30 space-y-12">
-                <div class="relative">
-                    <div class="absolute -left-[41px] top-0 w-4 h-4 rounded-full bg-sky-500 shadow-[0_0_15px_rgba(14,165,233,0.5)]"></div>
-                    <span class="text-sky-400 font-bold">2026.03.10</span>
-                    <h3 class="text-2xl font-black mt-2 uppercase">v2.6.0 "Gold Rush"</h3>
-                    <ul class="mt-4 space-y-2 text-slate-400 text-sm list-disc pl-5">
-                        <li>新エリア「黄金の砂漠」を追加。</li>
-                        <li>ギルド対抗戦システムのベータ版を公開。</li>
-                        <li>一部モンスターのバランス調整。</li>
-                    </ul>
-                </div>
-                <div class="relative">
-                    <div class="absolute -left-[41px] top-0 w-4 h-4 rounded-full bg-slate-700"></div>
-                    <span class="text-slate-500 font-bold">2026.02.15</span>
-                    <h3 class="text-2xl font-black mt-2 uppercase">v2.5.4 Maintenance</h3>
-                    <ul class="mt-4 space-y-2 text-slate-400 text-sm list-disc pl-5">
-                        <li>サーバーパフォーマンスの最適化。</li>
-                        <li>UIの視認性を改善。</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- タブコンテンツ: お知らせ -->
-        <div id="news" class="tab-content">
-            <div class="grid md:grid-cols-2 gap-6">
-                <article class="glass rounded-3xl overflow-hidden group">
-                    <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=800');"></div>
-                    <div class="p-6">
-                        <span class="bg-sky-500 text-[10px] font-bold px-2 py-1 rounded text-white mb-4 inline-block">EVENT</span>
-                        <h4 class="text-xl font-bold mb-2 group-hover:text-sky-400 transition">春の経験値1.5倍キャンペーン開始！</h4>
-                        <p class="text-slate-400 text-sm mb-4">期間限定で全ての探索で獲得できる経験値が増加します。この機会にレベルアップを目指そう。</p>
-                        <time class="text-[10px] text-slate-600 font-bold">POSTED ON MARCH 5, 2026</time>
-                    </div>
-                </article>
-                <article class="glass rounded-3xl overflow-hidden group border border-white/10">
-                    <div class="h-48 bg-cover bg-center grayscale group-hover:grayscale-0 transition duration-500" style="background-image: url('https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=800');"></div>
-                    <div class="p-6">
-                        <span class="bg-purple-500 text-[10px] font-bold px-2 py-1 rounded text-white mb-4 inline-block">DEV BLOG</span>
-                        <h4 class="text-xl font-bold mb-2 group-hover:text-purple-400 transition">次期大型アップデート「天空城」の構想</h4>
-                        <p class="text-slate-400 text-sm mb-4">開発チームが現在取り組んでいる、全く新しい探索レイヤーについての先行情報を公開します。</p>
-                        <time class="text-[10px] text-slate-600 font-bold">POSTED ON FEBRUARY 28, 2026</time>
-                    </div>
-                </article>
-            </div>
-        </div>
-
-        <!-- タブコンテンツ: FAQ -->
-        <div id="faq" class="tab-content max-w-3xl mx-auto space-y-4">
-            <details class="glass rounded-2xl group overflow-hidden">
-                <summary class="p-6 flex justify-between items-center cursor-pointer font-bold hover:bg-white/5 transition">
-                    Q. キャラクターが死んだらデータは消えますか？
-                    <i class="fas fa-plus group-open:rotate-45 transition text-sky-400"></i>
-                </summary>
-                <div class="p-6 text-slate-400 text-sm border-t border-white/5 bg-white/2">
-                    いいえ、消えません。ただし、一定時間のデスペナルティ（ステータス低下）が発生する場合があります。
-                </div>
-            </details>
-            <details class="glass rounded-2xl group overflow-hidden">
-                <summary class="p-6 flex justify-between items-center cursor-pointer font-bold hover:bg-white/5 transition">
-                    Q. 課金要素はありますか？
-                    <i class="fas fa-plus group-open:rotate-45 transition text-sky-400"></i>
-                </summary>
-                <div class="p-6 text-slate-400 text-sm border-t border-white/5 bg-white/2">
-                    SGBは完全無料でプレイ可能です。サーバー維持のための寄付は受け付けていますが、ゲームバランスを壊す「Pay to Win」の要素はありません。
-                </div>
-            </details>
-        </div>
-
+    <div class="hidden lg:flex items-center gap-8 text-xs font-bold uppercase tracking-widest text-white">
+        <a href="index.html" class="hover:text-sky-400 transition">Home</a>
+        <a href="#commands" class="hover:text-sky-400 transition">Commands</a>
+        <a href="#terms" class="hover:text-sky-400 transition">Terms</a>
+        <a href="#privacy" class="hover:text-sky-400 transition">Privacy</a>
+        <a href="[https://discord.gg/cV9ECW5KG2](https://discord.gg/cV9ECW5KG2)" target="_blank" class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2 rounded-full transition shadow-lg shadow-indigo-500/40">Join Discord</a>
     </div>
 
-    <!-- フッター -->
-    <footer class="py-16 glass border-t border-white/10 text-center">
-        <div class="text-[10px] tracking-[0.5em] font-black text-slate-600 mb-4 uppercase">Architect: r.m031y</div>
-        <p class="text-slate-700 text-[10px] font-bold">&copy; 2026 SGB PROJECT | REFERENCE PAGE</p>
-    </footer>
+    <button id="menu-btn" class="lg:hidden text-white focus:outline-none">
+        <i class="fas fa-bars text-2xl"></i>
+    </button>
+</nav>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script>
-        AOS.init({ duration: 800 });
+<div id="mobile-menu" class="fixed inset-0 z-[60] bg-slate-950 flex flex-col items-center justify-center gap-8 lg:hidden">
+    <button id="close-btn" class="absolute top-6 right-8 text-white text-3xl">
+        <i class="fas fa-times"></i>
+    </button>
+    <a href="index.html" class="text-3xl font-black uppercase text-white">Home</a>
+    <a href="#commands" class="text-3xl font-black uppercase text-white">Commands</a>
+    <a href="#terms" class="text-3xl font-black uppercase text-white">Terms</a>
+    <a href="#privacy" class="text-3xl font-black uppercase text-white">Privacy</a>
+    <a href="[https://discord.gg/cV9ECW5KG2](https://discord.gg/cV9ECW5KG2)" target="_blank" class="text-xl font-black text-indigo-400">Discord Join</a>
+</div>
 
-        // タブ切り替え
-        function showTab(tabId) {
-            const contents = document.querySelectorAll('.tab-content');
-            const btns = document.querySelectorAll('.tab-btn');
+<header class="relative pt-40 pb-20 px-6 text-center animate-on-scroll">
+    <h1 class="text-5xl md:text-7xl font-black mb-6 gradient-text uppercase tracking-tighter">Guide & Policy</h1>
+    <p class="text-slate-400 text-lg max-w-2xl mx-auto text-white">冒険者としての心得と、王国の法典をここに記す。</p>
+</header>
+
+<main class="max-w-4xl mx-auto px-6 space-y-32 pb-40">
+
+    <section id="commands" class="scroll-mt-32">
+        <h2 class="text-3xl font-black italic mb-10 flex items-center gap-4 text-white">
+            <span class="h-10 w-2 bg-sky-500 rounded-full"></span>COMMAND LIST
+        </h2>
+        <div class="grid gap-4">
+            <div class="command-card p-5 animate-on-scroll">
+                <code class="text-sky-400 font-black text-xl">/admin_sys</code>
+                <p class="text-slate-400 mt-2 text-sm leading-relaxed">管理者専用。システムの操作、物資配布、監視を行います。</p>
+            </div>
+            <div class="command-card p-5 animate-on-scroll">
+                <code class="text-sky-400 font-black text-xl">/adventure</code>
+                <p class="text-slate-400 mt-2 text-sm leading-relaxed">島を探索し、魔物と交戦します。経験と戦利品を得る基本行動です。</p>
+            </div>
+            <div class="command-card p-5 animate-on-scroll">
+                <code class="text-sky-400 font-black text-xl">/bank</code>
+                <p class="text-slate-400 mt-2 text-sm leading-relaxed">資産管理を行います。預けているだけで利息により資産が増えます。</p>
+            </div>
+            <div class="command-card p-5 animate-on-scroll">
+                <code class="text-sky-400 font-black text-xl">/casino</code>
+                <p class="text-slate-400 mt-2 text-sm leading-relaxed">5000Gを投じ、運命に挑みます。一獲千金の夢を追う場所です。</p>
+            </div>
+            <div class="command-card p-5 animate-on-scroll">
+                <code class="text-sky-400 font-black text-xl">/daily</code>
+                <p class="text-slate-400 mt-2 text-sm leading-relaxed">24時間に一度、王国から支給される支援物資を受け取ります。</p>
+            </div>
+            <div class="command-card p-5 animate-on-scroll">
+                <code class="text-sky-400 font-black text-xl">/guild</code>
+                <p class="text-slate-400 mt-2 text-sm leading-relaxed">仲間と協力し、勢力拡大や拠点占領戦へ参戦するための指令室です。</p>
+            </div>
+            <div class="command-card p-5 animate-on-scroll">
+                <code class="text-sky-400 font-black text-xl">/shop</code>
+                <p class="text-slate-400 mt-2 text-sm leading-relaxed">武具購入、ジョブチェンジ、従者との契約を行います。</p>
+            </div>
+            <div class="command-card p-5 animate-on-scroll">
+                <code class="text-sky-400 font-black text-xl">/status</code>
+                <p class="text-slate-400 mt-2 text-sm leading-relaxed">現在の戦績、所持品、資産状況を詳細に確認します。</p>
+            </div>
+            <div class="command-card p-5 animate-on-scroll">
+                <code class="text-sky-400 font-black text-xl">/travel</code>
+                <p class="text-slate-400 mt-2 text-sm leading-relaxed">現在地を離れ、異なるエリアへ移動します。</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="terms" class="scroll-mt-32 animate-on-scroll">
+        <h2 class="text-3xl font-black italic mb-10 flex items-center gap-4 text-white">
+            <span class="h-10 w-2 bg-indigo-500 rounded-full"></span>TERMS OF SERVICE
+        </h2>
+        <div class="glass p-8 rounded-3xl text-slate-300 space-y-6 text-sm md:text-base border-l-4 border-indigo-500">
+            <div class="space-y-2 text-white">
+                <h3 class="font-bold flex items-center gap-2"><i class="fas fa-check-circle text-indigo-400"></i> 第1条：利用条件</h3>
+                <p class="text-slate-300">本サービスはDiscord上で提供されるゲームです。利用開始をもって規約に同意したとみなします。</p>
+            </div>
+            <div class="space-y-2 text-white">
+                <h3 class="font-bold flex items-center gap-2"><i class="fas fa-ban text-red-400"></i> 第2条：禁止事項</h3>
+                <p class="text-slate-300">Bot利用、バグ悪用、他者への誹謗中傷、RMTを禁じます。違反時はデータを削除します。</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="privacy" class="scroll-mt-32 animate-on-scroll">
+        <h2 class="text-3xl font-black italic mb-10 flex items-center gap-4 text-white">
+            <span class="h-10 w-2 bg-purple-500 rounded-full"></span>PRIVACY POLICY
+        </h2>
+        <div class="glass p-8 rounded-3xl text-slate-300 text-sm border-l-4 border-purple-500">
+            <p>DiscordのユーザーIDとニックネームをデータ保存のために使用します。外部への公開や販売は一切行いません。削除希望は運営まで申請してください。</p>
+        </div>
+    </section>
+
+    <section class="animate-on-scroll">
+        <div class="glass p-4 rounded-[2rem] overflow-hidden relative group">
             
-            contents.forEach(content => content.classList.remove('active'));
-            btns.forEach(btn => btn.classList.remove('active'));
+            <img src="[https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=1200](https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=1200)" alt="World Visual" class="w-full h-auto rounded-[1.5rem] transition-transform duration-700 hover:scale-105">
+        </div>
+    </section>
 
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
+</main>
 
-        // モバイルメニュー
-        const menuBtn = document.getElementById('menu-btn');
-        const closeBtn = document.getElementById('close-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
+<footer class="py-20 glass border-t border-white/10 text-center">
+    <p class="text-slate-600 text-[10px] font-black tracking-[0.5em] uppercase text-white">SGB PROJECT &copy; 2026</p>
+</footer>
 
-        menuBtn.addEventListener('click', () => mobileMenu.classList.add('active'));
-        closeBtn.addEventListener('click', () => mobileMenu.classList.remove('active'));
+<script>
+    const menuBtn = document.getElementById('menu-btn');
+    const closeBtn = document.getElementById('close-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
 
-        // 背景パーティクル
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        function initCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 1.5;
-                this.speed = Math.random() * 0.2 + 0.1;
-                this.opacity = Math.random() * 0.3;
+    menuBtn.onclick = () => mobileMenu.classList.add('active');
+    closeBtn.onclick = () => mobileMenu.classList.remove('active');
+
+    function showAlert(e) {
+        const alertBox = document.getElementById('custom-alert');
+        alertBox.style.display = 'block';
+        alertBox.style.left = (e.clientX > window.innerWidth - 200 ? e.clientX - 200 : e.clientX) + 'px';
+        alertBox.style.top = e.clientY + 'px';
+        setTimeout(() => { alertBox.style.display = 'none'; }, 1500);
+        return false;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
             }
-            update() { this.y -= this.speed; if (this.y < 0) this.y = canvas.height; }
-            draw() { ctx.fillStyle = `rgba(96, 165, 250, ${this.opacity})`; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
-        }
-        function createParticles() { particles = []; for (let i = 0; i < 50; i++) particles.push(new Particle()); }
-        function animate() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
-        window.addEventListener('resize', () => { initCanvas(); createParticles(); });
-        initCanvas(); createParticles(); animate();
-    </script>
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
