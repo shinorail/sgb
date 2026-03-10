@@ -13,11 +13,7 @@
             font-family: 'Noto Sans JP', sans-serif; 
             background-color: #020617; 
             color: #f1f5f9; 
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+            overflow-x: hidden;
             margin: 0;
         }
 
@@ -50,43 +46,101 @@
             width: 100%;
             height: 100%;
         }
+
+        /* ハンバーガーメニューの開閉アニメーション */
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%);
+        }
+        #mobile-menu.active {
+            transform: translateX(0);
+        }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col">
 
     <canvas id="bg-canvas"></canvas>
 
-    <div class="max-w-xl w-full px-6 text-center z-10">
-        <div class="mb-8 floating">
-            <span class="text-9x1 font-black opacity-10 absolute inset-0 flex items-center justify-center -z-10 select-none" style="font-size: 15rem;">404</span>
-            <i class="fas fa-compass text-7xl text-sky-500 mb-6"></i>
+    <!-- ナビゲーション -->
+    <nav class="fixed top-0 w-full z-50 glass px-6 py-4 flex justify-between items-center border-b border-white/10">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-gradient-to-br from-sky-500 to-indigo-600 rounded-lg flex items-center justify-center">
+                <i class="fas fa-sword text-white text-sm"></i>
+            </div>
+            <span class="text-lg font-black tracking-tighter">SGB <span class="text-sky-400">PROJECT</span></span>
         </div>
         
-        <h1 class="text-4xl font-black mb-4 tracking-tighter">道に迷いましたか？</h1>
-        
-        <div class="glass p-8 rounded-[32px] mb-10 border border-white/10">
-            <p class="text-slate-400 leading-relaxed mb-6">
-                おっと、ここはマップの端のようです。<br>
-                指定されたページは存在しないか、モンスターに食べられてしまった可能性があります。
-            </p>
-            <div class="text-left bg-black/40 p-4 rounded-xl font-mono text-sm border border-white/5">
-                <p class="text-red-400">> Error: Page_Not_Found</p>
-                <p class="text-slate-500">> Searching for alternative routes...</p>
-                <p class="text-green-400">> Found: /home</p>
-            </div>
+        <!-- PCリンク -->
+        <div class="hidden md:flex items-center gap-6 text-xs font-bold uppercase tracking-widest">
+            <a href="index.html#about" class="hover:text-sky-400 transition">About</a>
+            <a href="index.html#tutorial" class="hover:text-sky-400 transition">Tutorial</a>
+            <a href="https://discord.gg/cV9ECW5KG2" target="_blank" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-full transition">Guild</a>
         </div>
 
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="index.html" class="bg-sky-500 hover:bg-sky-400 text-white font-black py-4 px-10 rounded-2xl transition shadow-xl shadow-sky-500/20">
-                拠点の町へ戻る
-            </a>
-            <a href="https://discord.gg/cV9ECW5KG2" target="_blank" class="glass font-bold py-4 px-10 rounded-2xl hover:bg-white/10 transition border border-white/10">
-                ギルドで報告する
-            </a>
+        <!-- ハンバーガーボタン -->
+        <button id="menu-btn" class="md:hidden text-white focus:outline-none">
+            <i class="fas fa-bars text-xl"></i>
+        </button>
+    </nav>
+
+    <!-- モバイルメニューオーバーレイ -->
+    <div id="mobile-menu" class="fixed inset-0 z-[60] glass flex flex-col items-center justify-center gap-8 md:hidden">
+        <button id="close-btn" class="absolute top-6 right-6 text-white text-2xl">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="index.html" class="text-2xl font-black hover:text-sky-400">HOME</a>
+        <a href="index.html#about" class="text-2xl font-black hover:text-sky-400">ABOUT</a>
+        <a href="index.html#tutorial" class="text-2xl font-black hover:text-sky-400">TUTORIAL</a>
+        <a href="https://discord.gg/cV9ECW5KG2" target="_blank" class="text-2xl font-black text-indigo-400">DISCORD</a>
+    </div>
+
+    <!-- コンテンツ -->
+    <div class="flex-grow flex items-center justify-center pt-20">
+        <div class="max-w-xl w-full px-6 text-center z-10">
+            <div class="mb-8 floating relative">
+                <span class="text-9x1 font-black opacity-10 absolute inset-0 flex items-center justify-center -z-10 select-none" style="font-size: 12rem; top: 50%; transform: translateY(-50%);">404</span>
+                <i class="fas fa-compass text-7xl text-sky-500 mb-6"></i>
+            </div>
+            
+            <h1 class="text-4xl font-black mb-4 tracking-tighter">道に迷いましたか？</h1>
+            
+            <div class="glass p-8 rounded-[32px] mb-10 border border-white/10">
+                <p class="text-slate-400 leading-relaxed mb-6">
+                    おっと、ここはマップの端のようです。<br>
+                    指定されたページは存在しないか、モンスターに食べられてしまった可能性があります。
+                </p>
+                <div class="text-left bg-black/40 p-4 rounded-xl font-mono text-sm border border-white/5">
+                    <p class="text-red-400">> Error: Page_Not_Found</p>
+                    <p class="text-slate-500">> Searching for alternative routes...</p>
+                    <p class="text-green-400">> Found: /home</p>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="index.html" class="bg-sky-500 hover:bg-sky-400 text-white font-black py-4 px-10 rounded-2xl transition shadow-xl shadow-sky-500/20">
+                    拠点の町へ戻る
+                </a>
+                <a href="https://discord.gg/cV9ECW5KG2" target="_blank" class="glass font-bold py-4 px-10 rounded-2xl hover:bg-white/10 transition border border-white/10">
+                    ギルドで報告する
+                </a>
+            </div>
         </div>
     </div>
 
     <script>
+        // ハンバーガーメニュー制御
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+
+        menuBtn.addEventListener('click', () => mobileMenu.classList.add('active'));
+        closeBtn.addEventListener('click', () => mobileMenu.classList.remove('active'));
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.remove('active'));
+        });
+
+        // 背景パーティクル
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
